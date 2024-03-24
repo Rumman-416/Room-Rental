@@ -7,7 +7,7 @@ const PORT = 3000;
 const URI = "mongodb://127.0.0.1:27017/roomrental";
 app.use(express.json());
 
-app.use("/home", routeroom);
+app.use("/dashnoard", routeroom);
 
 mongoose
   .connect(URI)

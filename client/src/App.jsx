@@ -1,7 +1,12 @@
 import React from "react";
+import DashBoard from "./pages/DashBoard";
 
 const App = () => {
-  return <div className=" bg-red-400">App</div>;
+  return (
+    <div>
+      <DashBoard />
+    </div>
+  );
 };
 
 export default App;

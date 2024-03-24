@@ -1,9 +1,5 @@
 const room = require("../models/roomModel");
 
-const home = (req, res) => {
-  res.send("hello");
-};
-
 const roomPost = async (req, res) => {
   try {
     if (!req.body.name || !req.body.address || !req.body.phone) {
@@ -11,8 +7,11 @@ const roomPost = async (req, res) => {
     }
     const newRoom = {
       name: req.body.name,
-      address: req.body.address,
       phone: req.body.phone,
+      address: req.body.address,
+      city: req.body.city,
+      state: req.body.state,
+      rent: req.body.rent,
     };
     const roomAdd = await room.create(newRoom);
 

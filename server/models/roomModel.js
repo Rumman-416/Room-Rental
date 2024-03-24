@@ -5,11 +5,23 @@ const roomSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  phone: {
+    type: Number,
+    required: true,
+  },
   address: {
     type: String,
     required: true,
   },
-  phone: {
+  city: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+  rent: {
     type: Number,
     required: true,
   },
