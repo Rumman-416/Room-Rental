@@ -4,12 +4,13 @@ const {
   getRoom,
   updateRoom,
   deleteRoom,
+  uploadMiddleware, // Import the uploadMiddleware from the controller
 } = require("../controller/controller");
 
 const router = express.Router();
 
 router.get("/", getRoom);
-router.post("/", roomPost);
+router.post("/", uploadMiddleware, roomPost); // Use uploadMiddleware before roomPost
 router.put("/:id", updateRoom);
 router.delete("/:id", deleteRoom);
 

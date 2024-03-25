@@ -8,6 +8,7 @@ const AddRooms = () => {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [rent, setRent] = useState("");
+  const [numOfGuest, setNumOfGuest] = useState("");
   const [images, setImages] = useState([]);
 
   const handleImageChange = (e) => {
@@ -23,11 +24,12 @@ const AddRooms = () => {
       formData.append("city", city);
       formData.append("state", state);
       formData.append("rent", rent);
+      formData.append("numOfGuest", numOfGuest);
       images.forEach((image) => {
         formData.append("images", image);
       });
 
-      await axios.post("your-backend-url", formData, {
+      await axios.post("http://localhost:3000/dashboard", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -38,6 +40,7 @@ const AddRooms = () => {
       setCity("");
       setState("");
       setRent("");
+      setNumOfGuest("");
       setImages([]);
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -92,6 +95,14 @@ const AddRooms = () => {
           type="number"
           className="border-2"
           onChange={(e) => setRent(e.target.value)}
+        />
+      </div>
+      <div className="flex gap-5">
+        <h5>Number of Guests</h5>
+        <input
+          type="number"
+          className="border-2"
+          onChange={(e) => setNumOfGuest(e.target.value)}
         />
       </div>
       {/* <LocationSelector /> */}
