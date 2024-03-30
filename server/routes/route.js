@@ -9,9 +9,9 @@ const {
 
 const router = express.Router();
 
-router.get("/", getRoom);
-router.post("/", uploadMiddleware, roomPost); // Use uploadMiddleware before roomPost
-router.put("/:id", updateRoom);
-router.delete("/:id", deleteRoom);
+router.get("/", getRoom); // GET endpoint to fetch all rooms
+router.post("/", uploadMiddleware, roomPost); // POST endpoint to add a new room, using uploadMiddleware to handle images
+router.put("/:id", updateRoom); // PUT endpoint to update a room by ID
+router.delete("/:id", deleteRoom); // DELETE endpoint to delete a room by ID
 
 module.exports = router;

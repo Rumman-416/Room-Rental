@@ -30,7 +30,7 @@ const roomSchema = mongoose.Schema({
     required: true,
   },
   images: {
-    type: [String],
+    type: [String], // Array of base64 encoded image strings
     required: true,
   },
 });

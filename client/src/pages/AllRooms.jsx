@@ -5,7 +5,6 @@ const AllRooms = () => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    // Fetch room data from the backend when the component mounts
     const fetchRooms = async () => {
       try {
         const response = await axios.get("http://localhost:3000/dashboard");
@@ -15,8 +14,8 @@ const AllRooms = () => {
       }
     };
 
-    fetchRooms(); // Call the fetchRooms function
-  }, []); // Empty dependency array ensures that this effect runs only once after initial render
+    fetchRooms();
+  }, []);
 
   return (
     <div>
@@ -38,9 +37,9 @@ const AllRooms = () => {
                 {room.images.map((image, index) => (
                   <img
                     key={index}
-                    src={`http://localhost:3000/${image}`}
+                    src={image}
                     alt={`Room ${index + 1}`}
-                    style={{ maxWidth: "200px" }}
+                    className=" h-20 w-36"
                   />
                 ))}
               </div>

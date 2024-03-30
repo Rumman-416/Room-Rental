@@ -11,8 +11,22 @@ const AddRooms = () => {
   const [numOfGuest, setNumOfGuest] = useState("");
   const [images, setImages] = useState([]);
 
-  const handleImageChange = (e) => {
-    setImages(Array.from(e.target.files));
+  // Function to convert image to base64
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        resolve(reader.result);
+        console.log(reader.result);
+      };
+      reader.onerror = (error) => reject(error);
+    });
+
+  const handleImageChange = async (e) => {
+    const files = Array.from(e.target.files);
+    const base64Images = await Promise.all(files.map(toBase64));
+    setImages(base64Images);
   };
 
   const handleSubmit = async () => {
@@ -42,6 +56,7 @@ const AddRooms = () => {
       setRent("");
       setNumOfGuest("");
       setImages([]);
+      window.alert("Data added successfully");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -110,10 +125,13 @@ const AddRooms = () => {
         <input type="file" multiple onChange={handleImageChange} />
       </div>
       <div>
+        <img src={images} alt="" className=" h-24 w-52" />
+      </div>
+      <div>
         <input
           type="button"
           value="Upload"
-          className=" h-8 w-20 bg-red-300 cursor-pointer"
+          className="h-8 w-20 bg-red-300 cursor-pointer"
           onClick={handleSubmit}
         />
       </div>
