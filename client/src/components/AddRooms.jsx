@@ -31,6 +31,27 @@ const AddRooms = () => {
 
   const handleSubmit = async () => {
     try {
+      if (
+        !name ||
+        !phone ||
+        !address ||
+        !city ||
+        !state ||
+        !rent ||
+        !numOfGuest ||
+        !images
+      ) {
+        return window.alert("Please fill all the information");
+      }
+      if (
+        parseInt(phone) < 0 ||
+        parseInt(rent) < 0 ||
+        parseInt(numOfGuest) < 0
+      ) {
+        return window.alert(
+          "Phone, Rent, and Number of Guests cannot be negative."
+        );
+      }
       const formData = new FormData();
       formData.append("name", name);
       formData.append("phone", phone);
