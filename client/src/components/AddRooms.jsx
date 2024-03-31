@@ -57,6 +57,7 @@ const AddRooms = () => {
       setNumOfGuest("");
       setImages([]);
       window.alert("Data added successfully");
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error);
     }
