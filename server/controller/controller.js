@@ -9,7 +9,15 @@ const upload = multer({ storage: storage });
 
 const roomPost = async (req, res) => {
   try {
-    if (!req.body.name || !req.body.address || !req.body.phone) {
+    if (
+      !req.body.name ||
+      !req.body.address ||
+      !req.body.phone ||
+      !req.body.city ||
+      !req.body.state ||
+      !req.body.rent ||
+      !req.body.numOfGuest
+    ) {
       return res.status(400).send("Missing required fields");
     }
 
@@ -35,10 +43,26 @@ const roomPost = async (req, res) => {
     return res.status(500).send("Internal Server Error");
   }
 };
+
 const getRoom = async (req, res) => {
   try {
     const getroom = await room.find({});
     return res.send(getroom);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+};
+
+const getParticularRoom = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getroom = await room.findById(id);
+    if (!getroom) {
+      return res.status(404).send("data not found");
+    } else {
+      return res.status(200).send(getroom);
+    }
   } catch (error) {
     console.log(error);
     return res.status(500).send("Internal Server Error");
@@ -78,6 +102,7 @@ const uploadMiddleware = upload.array("images");
 
 module.exports = {
   getRoom,
+  getParticularRoom,
   roomPost,
   updateRoom,
   deleteRoom,

@@ -30,8 +30,12 @@ const roomSchema = mongoose.Schema({
     required: true,
   },
   images: {
-    type: [String], // Array of base64 encoded image strings
+    type: [String],
     required: true,
+  },
+  booked: {
+    type: Boolean,
+    default: false,
   },
 });
 
