@@ -16,9 +16,10 @@ const roomPost = async (req, res) => {
       !req.body.city ||
       !req.body.state ||
       !req.body.rent ||
-      !req.body.numOfGuest
+      !req.body.numOfGuest ||
+      !req.body.images
     ) {
-      return res.status(400).send("Missing required fields");
+      return res.status(400).send("Missing required fields or images");
     }
 
     // Decode base64 encoded images
@@ -32,7 +33,7 @@ const roomPost = async (req, res) => {
       state: req.body.state,
       rent: req.body.rent,
       numOfGuest: req.body.numOfGuest,
-      images: req.body.images,
+      images: req.body.images, // Use decoded images
     };
 
     const roomAdd = await room.create(newRoom);

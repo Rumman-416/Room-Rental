@@ -51,7 +51,14 @@ const AddRooms = () => {
         return window.alert(
           "Phone, Rent, and Number of Guests cannot be negative."
         );
+
       }
+      if 
+        (phone.length !== 10)
+       {
+        return window.alert("Invalid phone number. Please enter a 10-digit phone number.");
+      }
+
       const formData = new FormData();
       formData.append("name", name);
       formData.append("phone", phone);
@@ -69,14 +76,7 @@ const AddRooms = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      setName("");
-      setPhone("");
-      setAddress("");
-      setCity("");
-      setState("");
-      setRent("");
-      setNumOfGuest("");
-      setImages([]);
+
       window.alert("Data added successfully");
       window.location.reload();
     } catch (error) {
@@ -144,7 +144,8 @@ const AddRooms = () => {
       </div>
       {/* <LocationSelector /> */}
       <div>
-        <input type="file" multiple onChange={handleImageChange} />
+      <input type="file" accept="image/jpeg, image/png" multiple onChange={handleImageChange} />
+
       </div>
       <div>
         <img src={images} alt="" className=" h-24 w-52" />
@@ -153,12 +154,13 @@ const AddRooms = () => {
         <input
           type="button"
           value="Upload"
-          className="h-8 w-20 bg-red-300 cursor-pointer"
+          className="h-8 w-20 bg-[#DFA8E4] cursor-pointer"
           onClick={handleSubmit}
         />
       </div>
     </div>
   );
 };
-
+//DFA8E4
+//590d80
 export default AddRooms;
