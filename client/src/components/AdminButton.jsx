@@ -1,37 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const AdminButton = () => {
   return (
-    <div>
+    <div className="flex justify-evenly m-5">
       <Link to="/seller-DashBoard">
         <input
           type="button"
           value="ADD"
-          style={{
-            height: '40px',
-            width: '200px',
-            backgroundColor: '#DFA8E4',
-            cursor: 'pointer',
-            margin: '10px',
-            border: 'none',
-            borderRadius: '5px',
-          }}
+          className=" h-10 bg-[#DFA8E4] w-44 rounded-lg cursor-pointer"
         />
       </Link>
       <Link to="/bookrooms">
         <input
           type="button"
           value="SHOW"
-          style={{
-            height: '40px',
-            width: '200px',
-            backgroundColor: '#DFA8E4',
-            cursor: 'pointer',
-            margin: '10px',
-            border: 'none',
-            borderRadius: '5px',
-          }}
+          className=" h-10 bg-[#DFA8E4] w-44 rounded-lg cursor-pointer"
         />
       </Link>
     </div>
