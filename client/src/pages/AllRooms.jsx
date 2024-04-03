@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Namenav from "../components/Namenav";
+import AdminButton from "../components/AdminButton";
 
 const AllRooms = () => {
   const [rooms, setRooms] = useState([]);
@@ -21,6 +23,8 @@ const AllRooms = () => {
 
   return (
     <div>
+      <Namenav/>
+      <AdminButton/>
       <h2>All Rooms</h2>
       <div>
         {/* Render each room's information */}
