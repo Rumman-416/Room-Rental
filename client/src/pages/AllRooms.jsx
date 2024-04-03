@@ -22,16 +22,16 @@ const AllRooms = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ padding: "10px" }}>
       <Namenav/>
       <AdminButton/>
-      <h2>All Rooms</h2>
+      <h5 style={{ color:'#DFA8E4' }}>All Rooms</h5>
       <div>
         {/* Render each room's information */}
         {rooms.map((room) => (
-          <div key={room._id}>
+          <div key={room._id} style={{ marginBottom: "10px", border: "1px solid gray", padding: "10px" }}>
             <h3>{room.name}</h3>
-            <p>Phone: {room.phone}</p>
+            <p>Phone: <span style={{ color: "blue", fontWeight: "bold" }}>{room.phone}</span></p>
             <p>Address: {room.address}</p>
             <p>City: {room.city}</p>
             <p>State: {room.state}</p>
@@ -45,7 +45,8 @@ const AllRooms = () => {
                     key={index}
                     src={image}
                     alt={`Room ${index + 1}`}
-                    className=" h-20 w-36"
+                    className="h-20 w-36"
+                    style={{ marginTop: "10px" }}
                   />
                 ))}
               </div>

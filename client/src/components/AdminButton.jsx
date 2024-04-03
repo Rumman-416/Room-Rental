@@ -10,7 +10,7 @@ const AdminButton = () => {
           value="ADD"
           style={{
             height: '40px',
-            width: '210px',
+            width: '200px',
             backgroundColor: '#DFA8E4',
             cursor: 'pointer',
             margin: '10px',
@@ -25,7 +25,7 @@ const AdminButton = () => {
           value="SHOW"
           style={{
             height: '40px',
-            width: '210px',
+            width: '200px',
             backgroundColor: '#DFA8E4',
             cursor: 'pointer',
             margin: '10px',
