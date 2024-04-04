@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Namenav from "../components/Namenav";
@@ -7,6 +5,7 @@ import AdminButton from "../components/AdminButton";
 
 const AllRooms = () => {
   const [rooms, setRooms] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -22,13 +21,34 @@ const AllRooms = () => {
     fetchRooms();
   }, []);
 
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredRooms = rooms.filter(
+    (room) =>
+      room.state.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      room.city.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div style={{ padding: "10px" }}>
       <Namenav />
       <AdminButton />
-      <h5 style={{ color: "#DFA8E4" }}>All Rooms</h5>
       <div>
-        {rooms.map((room) => (
+        <form>
+          <input
+            type="text"
+            className="h-8 rounded-md"
+            placeholder="search city or state..."
+            onChange={handleSearchInputChange}
+          />
+        </form>
+      </div>
+      <h5 style={{ color: "#DFA8E4" }}>All Rooms</h5>
+
+      <div>
+        {filteredRooms.map((room) => (
           <div
             key={room._id}
             style={{
