@@ -6,7 +6,7 @@ const {
   updateRoom,
   deleteRoom,
   uploadMiddleware, // Import the uploadMiddleware from the controller
-} = require("../controller/controller");
+} = require("../controller/roomController");
 
 const router = express.Router();
 

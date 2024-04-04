@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const AdminButton = () => {
   return (
     <div className="flex justify-evenly m-5">
-      <Link to="/seller-DashBoard">
+      <Link to="/renter-DashBoard">
         <input
           type="button"
           value="ADD"
