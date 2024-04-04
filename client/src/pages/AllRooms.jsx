@@ -7,7 +7,6 @@ import AdminButton from "../components/AdminButton";
 const AllRooms = () => {
   const [rooms, setRooms] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-
   useEffect(() => {
     const fetchRooms = async () => {
       try {
