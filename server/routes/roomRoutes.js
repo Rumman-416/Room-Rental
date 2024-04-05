@@ -1,7 +1,8 @@
 const express = require("express");
 const {
   roomPost,
-  getRoom,
+  getAllRoom,
+  getRenterRoom,
   getParticularRoom,
   updateRoom,
   deleteRoom,
@@ -10,9 +11,10 @@ const {
 
 const router = express.Router();
 
-router.get("/", getRoom); // GET endpoint to fetch all rooms
+router.get("/", getAllRoom); // GET endpoint to fetch all rooms
 router.get("/:id", getParticularRoom); // GET endpoint to fetch
 router.post("/", uploadMiddleware, roomPost); // POST endpoint to add a new room, using uploadMiddleware to handle images
+router.get("/renter", getRenterRoom); // GET endpoint to fetch rooms belonging to a specific renter
 router.put("/:id", updateRoom); // PUT endpoint to update a room by ID
 router.delete("/:id", deleteRoom); // DELETE endpoint to delete a room by ID
 

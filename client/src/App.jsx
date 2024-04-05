@@ -2,17 +2,17 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import DashBoard from "./pages/DashBoard";
 import AllRooms from "./pages/AllRooms";
-import Login from "./pages/Login";
+import RenterLogin from "./pages/RenterLogin";
 import Home from "./pages/Home";
-import Register from "./pages/Register";
+import RenterRegister from "./pages/RenterRegister";
 
 const App = () => {
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<RenterLogin />} />
+        <Route path="/register" element={<RenterRegister />} />
         <Route path="/renter-dashboard" element={<DashBoard />} />
         <Route path="/bookrooms" element={<AllRooms />} />
       </Routes>

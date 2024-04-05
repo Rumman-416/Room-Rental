@@ -34,6 +34,7 @@ const roomPost = async (req, res) => {
       rent: req.body.rent,
       numOfGuest: req.body.numOfGuest,
       images: req.body.images, // Use decoded images
+      user: req.body.userId,
     };
 
     const roomAdd = await room.create(newRoom);
@@ -41,14 +42,30 @@ const roomPost = async (req, res) => {
     return res.send(roomAdd);
   } catch (error) {
     console.log(error);
+    return res.status(500).send("Internal Server Error", error);
+  }
+};
+
+const getAllRoom = async (req, res) => {
+  try {
+    const getroom = await room.find({});
+    return res.send(getroom);
+  } catch (error) {
+    console.log(error);
     return res.status(500).send("Internal Server Error");
   }
 };
 
-const getRoom = async (req, res) => {
+const getRenterRoom = async (req, res) => {
   try {
-    const getroom = await room.find({});
-    return res.send(getroom);
+    // Ensure user is authenticated
+    if (!req.user) {
+      return res.status(401).send("Unauthorized");
+    }
+
+    // Retrieve rooms belonging to the authenticated user
+    const userRooms = await room.find({ user: req.user._id });
+    return res.send(userRooms);
   } catch (error) {
     console.log(error);
     return res.status(500).send("Internal Server Error");
@@ -102,7 +119,8 @@ const deleteRoom = async (req, res) => {
 const uploadMiddleware = upload.array("images");
 
 module.exports = {
-  getRoom,
+  getAllRoom,
+  getRenterRoom,
   getParticularRoom,
   roomPost,
   updateRoom,

@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const AddRooms = () => {
   const [name, setName] = useState("");
@@ -12,6 +13,8 @@ const AddRooms = () => {
   const [numOfGuest, setNumOfGuest] = useState("");
   const [images, setImages] = useState([]);
 
+  const userId = useSelector((state) => state.auth.userId);
+  console.log(userId);
   // Function to convert image to base64
   const toBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -52,15 +55,15 @@ const AddRooms = () => {
         return window.alert(
           "Phone, Rent, and Number of Guests cannot be negative."
         );
-
       }
-      if 
-        (phone.length !== 10)
-       {
-        return window.alert("Invalid phone number. Please enter a 10-digit phone number.");
+      if (phone.length !== 10) {
+        return window.alert(
+          "Invalid phone number. Please enter a 10-digit phone number."
+        );
       }
 
       const formData = new FormData();
+      formData.append("userId", userId); // Include user ID in the form data
       formData.append("name", name);
       formData.append("phone", phone);
       formData.append("address", address);
@@ -145,8 +148,12 @@ const AddRooms = () => {
       </div>
       {/* <LocationSelector /> */}
       <div>
-      <input type="file" accept="image/jpeg, image/png" multiple onChange={handleImageChange} />
-
+        <input
+          type="file"
+          accept="image/jpeg, image/png"
+          multiple
+          onChange={handleImageChange}
+        />
       </div>
       <div>
         <img src={images} alt="" className=" h-24 w-52" />

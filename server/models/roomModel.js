@@ -37,6 +37,10 @@ const roomSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const roomModel = mongoose.model("Room", roomSchema);
