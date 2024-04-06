@@ -14,9 +14,8 @@ const AddRooms = () => {
   const userId = useSelector((state) => state.auth.userId);
 
   const handleImageChange = (e) => {
-    // Convert FileList to an array
     const files = Array.from(e.target.files);
-    setImages(files);
+    setImages([...images, ...files]); // Concatenate new files with existing images
   };
 
   const handleSubmit = async () => {
