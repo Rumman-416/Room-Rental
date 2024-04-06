@@ -6,8 +6,7 @@ import AllRooms from "./pages/AllRooms";
 import RenterLogin from "./pages/RenterLogin";
 import Home from "./pages/Home";
 import RenterRegister from "./pages/RenterRegister";
-// import RenterRoom from "./components/RenterRoom";
-// import AddRooms from "./components/AddRooms";
+import ParticularRoom from "./pages/ParticularRoom";
 
 const App = () => {
   const { checkLocalStorage } = useAuth();
@@ -23,6 +22,7 @@ const App = () => {
         <Route path="/register" element={<RenterRegister />} />
         <Route path="/renter-dashboard" element={<DashBoard />} />
         <Route path="/bookrooms" element={<AllRooms />} />
+        <Route path="/rooms" element={<ParticularRoom />} />
       </Routes>
     </>
   );

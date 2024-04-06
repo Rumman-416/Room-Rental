@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const AddRooms = () => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState();
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -75,12 +75,21 @@ const AddRooms = () => {
       });
 
       window.alert("Data added successfully");
+
+      // Reset input fields
+      setName("");
+      setPhone("");
+      setAddress("");
+      setCity("");
+      setState("");
+      setRent("");
+      setNumOfGuest("");
+      setImages([]);
       window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
-
   return (
     <>
       <div className="flex flex-col items-center gap-5">

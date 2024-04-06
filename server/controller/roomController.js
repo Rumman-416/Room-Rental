@@ -1,10 +1,12 @@
 const room = require("../models/roomModel");
 const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
 
 // Multer storage configuration
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads");
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname); // Define the filename for the uploaded file
@@ -32,6 +34,8 @@ const roomPost = async (req, res) => {
 
     // Retrieve file paths of uploaded images
     const images = req.files.map((file) => file.path.replace("uploads/", ""));
+
+    // const images = req.files.map((file) => file.path);
 
     const newRoom = {
       name: req.body.name,
@@ -116,6 +120,18 @@ const deleteRoom = async (req, res) => {
     if (!roomDelete) {
       return res.status(404).send("data not found");
     } else {
+      // Remove associated images from the uploads folder
+      roomDelete.images.forEach((imageName) => {
+        const imagePath = path.join(__dirname, "..", "uploads", imageName);
+        fs.unlink(imagePath, (err) => {
+          if (err) {
+            console.error("Error deleting image:", err);
+          } else {
+            console.log("Image deleted:", imagePath);
+          }
+        });
+      });
+
       return res.status(200).send(roomDelete);
     }
   } catch (error) {
