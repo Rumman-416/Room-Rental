@@ -59,12 +59,12 @@ const getAllRoom = async (req, res) => {
 const getRenterRoom = async (req, res) => {
   try {
     // Ensure user is authenticated
-    if (!req.user) {
-      return res.status(401).send("Unauthorized");
+    if (!req.body.userId) {
+      return res.status(466).send("Unauthorized");
     }
 
     // Retrieve rooms belonging to the authenticated user
-    const userRooms = await room.find({ user: req.user._id });
+    const userRooms = await room.find({ user: req.body.userId });
     return res.send(userRooms);
   } catch (error) {
     console.log(error);

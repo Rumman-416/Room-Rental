@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import useAuth from "./utils/authUtils";
 import DashBoard from "./pages/DashBoard";
 import AllRooms from "./pages/AllRooms";
 import RenterLogin from "./pages/RenterLogin";
 import Home from "./pages/Home";
 import RenterRegister from "./pages/RenterRegister";
+// import RenterRoom from "./components/RenterRoom";
+// import AddRooms from "./components/AddRooms";
 
 const App = () => {
+  const { checkLocalStorage } = useAuth();
+
+  useEffect(() => {
+    checkLocalStorage();
+  }, []);
   return (
     <>
       <Routes>
@@ -15,35 +23,11 @@ const App = () => {
         <Route path="/register" element={<RenterRegister />} />
         <Route path="/renter-dashboard" element={<DashBoard />} />
         <Route path="/bookrooms" element={<AllRooms />} />
+        {/* <Route path="/addrooms" element={<AddRooms />} /> */}
+        {/* <Route path="/renterrooms" element={<RenterRoom />} /> */}
       </Routes>
     </>
   );
 };
 
 export default App;
-
-// import React from 'react';
-// import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// //import AllRooms from '.pages/AllRooms';
-// import DashBoard from "./pages/DashBoard";
-// //import AdminButton from './components/AdminButton';
-// import AllRooms  from './pages/AllRooms';
-
-// const App = () => {
-//   return (
-//     <Router>
-//       <Switch>
-//       <Route>
-// //         <Route path="/Pages/seller-dashboard" element={<DashBoard />} />
-// //         <Route path="/bookrooms" element={<AllRooms />} />
-// //       </Route>
-// //
-//         <Route path="/all-rooms">
-//           <AllRooms />
-//         </Route>
-//       </Switch>
-//     </Router>
-//   );
-// };
-
-// export default App;

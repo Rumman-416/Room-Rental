@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Namenav from "../components/Namenav";
-import AdminButton from "../components/AdminButton";
 
 const AllRooms = () => {
   const [rooms, setRooms] = useState([]);
@@ -32,8 +30,6 @@ const AllRooms = () => {
 
   return (
     <div style={{ padding: "10px" }}>
-      <Namenav />
-      <AdminButton />
       <div>
         <form>
           <input

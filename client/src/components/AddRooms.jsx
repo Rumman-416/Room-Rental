@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -89,84 +88,86 @@ const AddRooms = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-5">
-      <div className="flex gap-5">
-        <h5>Name</h5>
-        <input
-          type="text"
-          className="border-2"
-          onChange={(e) => setName(e.target.value)}
-        />
+    <>
+      <div className="flex flex-col items-center gap-5">
+        <div className="flex gap-5">
+          <h5>Name</h5>
+          <input
+            type="text"
+            className="border-2"
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="flex gap-5">
+          <h5>Phone</h5>
+          <input
+            type="number"
+            className="border-2"
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+        <div className="flex gap-5">
+          <h5>Room Address</h5>
+          <input
+            type="text"
+            className="border-2"
+            onChange={(e) => setAddress(e.target.value)}
+          />
+        </div>
+        <div className="flex gap-5">
+          <h5>City</h5>
+          <input
+            type="text"
+            className="border-2"
+            onChange={(e) => setCity(e.target.value)}
+          />
+        </div>
+        <div className="flex gap-5">
+          <h5>State</h5>
+          <input
+            type="text"
+            className="border-2"
+            onChange={(e) => setState(e.target.value)}
+          />
+        </div>
+        <div className="flex gap-5">
+          <h5>Rent</h5>
+          <input
+            type="number"
+            className="border-2"
+            onChange={(e) => setRent(e.target.value)}
+          />
+        </div>
+        <div className="flex gap-5">
+          <h5>Number of Guests</h5>
+          <input
+            type="number"
+            className="border-2"
+            onChange={(e) => setNumOfGuest(e.target.value)}
+          />
+        </div>
+        {/* <LocationSelector /> */}
+        <div>
+          <input
+            type="file"
+            accept="image/jpeg, image/png"
+            multiple
+            onChange={handleImageChange}
+          />
+        </div>
+        <div>
+          <img src={images} alt="" className=" h-24 w-52" />
+        </div>
+        <div>
+          <input
+            type="button"
+            value="Upload"
+            className="h-8 w-20 bg-[#DFA8E4] cursor-pointer"
+            onClick={handleSubmit}
+          />
+        </div>
       </div>
-      <div className="flex gap-5">
-        <h5>Phone</h5>
-        <input
-          type="number"
-          className="border-2"
-          onChange={(e) => setPhone(e.target.value)}
-        />
-      </div>
-      <div className="flex gap-5">
-        <h5>Room Address</h5>
-        <input
-          type="text"
-          className="border-2"
-          onChange={(e) => setAddress(e.target.value)}
-        />
-      </div>
-      <div className="flex gap-5">
-        <h5>City</h5>
-        <input
-          type="text"
-          className="border-2"
-          onChange={(e) => setCity(e.target.value)}
-        />
-      </div>
-      <div className="flex gap-5">
-        <h5>State</h5>
-        <input
-          type="text"
-          className="border-2"
-          onChange={(e) => setState(e.target.value)}
-        />
-      </div>
-      <div className="flex gap-5">
-        <h5>Rent</h5>
-        <input
-          type="number"
-          className="border-2"
-          onChange={(e) => setRent(e.target.value)}
-        />
-      </div>
-      <div className="flex gap-5">
-        <h5>Number of Guests</h5>
-        <input
-          type="number"
-          className="border-2"
-          onChange={(e) => setNumOfGuest(e.target.value)}
-        />
-      </div>
-      {/* <LocationSelector /> */}
-      <div>
-        <input
-          type="file"
-          accept="image/jpeg, image/png"
-          multiple
-          onChange={handleImageChange}
-        />
-      </div>
-      <div>
-        <img src={images} alt="" className=" h-24 w-52" />
-      </div>
-      <div>
-        <input
-          type="button"
-          value="Upload"
-          className="h-8 w-20 bg-[#DFA8E4] cursor-pointer"
-          onClick={handleSubmit}
-        />
-      </div>
-    </div>
+    </>
   );
 };
 

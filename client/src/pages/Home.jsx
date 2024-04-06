@@ -18,6 +18,13 @@ const Home = () => {
           className="h-10 w-20 bg-yellow-500"
         />
       </Link>
+      <Link to="/bookrooms">
+        <input
+          type="button"
+          value="allrooms"
+          className="h-10 w-20 bg-yellow-500"
+        />
+      </Link>
     </div>
   );
 };

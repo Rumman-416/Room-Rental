@@ -1,23 +1,40 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import AddRooms from "./AddRooms";
+import RenterRoom from "./RenterRoom";
 
 const AdminButton = () => {
+  const [add, setAdd] = useState(true);
+  const [show, setShow] = useState(false);
+
+  const handleAddClick = () => {
+    setAdd(true);
+    setShow(false);
+  };
+
+  const handleShowClick = () => {
+    setAdd(false);
+    setShow(true);
+  };
+
   return (
-    <div className="flex justify-evenly m-5">
-      <Link to="/renter-DashBoard">
+    <div>
+      <div className="flex justify-evenly m-5">
         <input
           type="button"
           value="ADD"
-          className=" h-10 bg-[#DFA8E4] w-44 rounded-lg cursor-pointer"
+          className="h-10 bg-[#DFA8E4] w-44 rounded-lg cursor-pointer"
+          onClick={handleAddClick}
         />
-      </Link>
-      <Link to="/bookrooms">
+
         <input
           type="button"
           value="SHOW"
-          className=" h-10 bg-[#DFA8E4] w-44 rounded-lg cursor-pointer"
+          className="h-10 bg-[#DFA8E4] w-44 rounded-lg cursor-pointer"
+          onClick={handleShowClick}
         />
-      </Link>
+      </div>
+      <div>{add ? <AddRooms /> : <></>}</div>
+      <div>{show ? <RenterRoom /> : <></>}</div>
     </div>
   );
 };
