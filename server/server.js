@@ -11,6 +11,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/dashboard", routeroom);
 app.use("/api/users", routeruser);
+app.use(express.static("uploads"));
 
 mongoose
   .connect(URI)

@@ -11,29 +11,17 @@ const AddRooms = () => {
   const [rent, setRent] = useState("");
   const [numOfGuest, setNumOfGuest] = useState("");
   const [images, setImages] = useState([]);
-
   const userId = useSelector((state) => state.auth.userId);
-  console.log(userId);
-  // Function to convert image to base64
-  const toBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        resolve(reader.result);
-        console.log(reader.result);
-      };
-      reader.onerror = (error) => reject(error);
-    });
 
-  const handleImageChange = async (e) => {
+  const handleImageChange = (e) => {
+    // Convert FileList to an array
     const files = Array.from(e.target.files);
-    const base64Images = await Promise.all(files.map(toBase64));
-    setImages(base64Images);
+    setImages(files);
   };
 
   const handleSubmit = async () => {
     try {
+      console.log("Images:", images);
       if (
         !name ||
         !phone ||
@@ -42,9 +30,11 @@ const AddRooms = () => {
         !state ||
         !rent ||
         !numOfGuest ||
-        !images
+        !images.length
       ) {
-        return window.alert("Please fill all the information");
+        return window.alert(
+          "Please fill all the information and select at least one image."
+        );
       }
       if (
         parseInt(phone) < 0 ||
@@ -62,7 +52,7 @@ const AddRooms = () => {
       }
 
       const formData = new FormData();
-      formData.append("userId", userId); // Include user ID in the form data
+      formData.append("userId", userId);
       formData.append("name", name);
       formData.append("phone", phone);
       formData.append("address", address);
@@ -70,8 +60,13 @@ const AddRooms = () => {
       formData.append("state", state);
       formData.append("rent", rent);
       formData.append("numOfGuest", numOfGuest);
-      images.forEach((image) => {
+
+      console.log("Before map, images:", images);
+
+      // Append images to formData using map
+      const imageFiles = images.map((image) => {
         formData.append("images", image);
+        return image;
       });
 
       await axios.post("http://localhost:3000/dashboard", formData, {
@@ -146,7 +141,6 @@ const AddRooms = () => {
             onChange={(e) => setNumOfGuest(e.target.value)}
           />
         </div>
-        {/* <LocationSelector /> */}
         <div>
           <input
             type="file"
@@ -154,9 +148,6 @@ const AddRooms = () => {
             multiple
             onChange={handleImageChange}
           />
-        </div>
-        <div>
-          <img src={images} alt="" className=" h-24 w-52" />
         </div>
         <div>
           <input
@@ -171,6 +162,4 @@ const AddRooms = () => {
   );
 };
 
-//DFA8E4
-//590d80
 export default AddRooms;

@@ -2,7 +2,14 @@ const room = require("../models/roomModel");
 const multer = require("multer");
 
 // Multer storage configuration
-const storage = multer.memoryStorage(); // Use memory storage for handling base64 encoded images
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname); // Define the filename for the uploaded file
+  },
+});
 
 // Multer upload configuration
 const upload = multer({ storage: storage });
@@ -17,13 +24,14 @@ const roomPost = async (req, res) => {
       !req.body.state ||
       !req.body.rent ||
       !req.body.numOfGuest ||
-      !req.body.images
+      !req.files ||
+      req.files.length === 0 // Check if files are uploaded
     ) {
       return res.status(400).send("Missing required fields or images");
     }
 
-    // Decode base64 encoded images
-    const images = req.files.map((file) => file.buffer.toString("base64")); // Array of base64 encoded images
+    // Retrieve file paths of uploaded images
+    const images = req.files.map((file) => file.path.replace("uploads/", ""));
 
     const newRoom = {
       name: req.body.name,
@@ -33,12 +41,12 @@ const roomPost = async (req, res) => {
       state: req.body.state,
       rent: req.body.rent,
       numOfGuest: req.body.numOfGuest,
-      images: req.body.images, // Use decoded images
+      images: images,
       user: req.body.userId,
     };
 
     const roomAdd = await room.create(newRoom);
-
+    console.log(roomAdd);
     return res.send(roomAdd);
   } catch (error) {
     console.log(error);

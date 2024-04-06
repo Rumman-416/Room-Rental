@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Namenav from "./Namenav";
-import AdminButton from "./AdminButton";
 
 const RenterRoom = () => {
   const [rooms, setRooms] = useState([]);
@@ -17,6 +15,7 @@ const RenterRoom = () => {
           { userId }
         );
         setRooms(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching rooms:", error);
       }
@@ -77,10 +76,9 @@ const RenterRoom = () => {
                 {room.images.map((image, index) => (
                   <img
                     key={index}
-                    src={image}
+                    src={`http://localhost:3000/${image}`} // Assuming images are served from this endpoint
                     alt={`Room ${index + 1}`}
-                    className="h-20 w-36"
-                    style={{ marginTop: "10px" }}
+                    className="h-20 w-36 m-5"
                   />
                 ))}
               </div>

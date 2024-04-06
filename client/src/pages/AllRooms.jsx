@@ -70,7 +70,7 @@ const AllRooms = () => {
                 {room.images.map((image, index) => (
                   <img
                     key={index}
-                    src={image}
+                    src={`http://localhost:3000/${image}`}
                     alt={`Room ${index + 1}`}
                     className="h-20 w-36"
                     style={{ marginTop: "10px" }}
