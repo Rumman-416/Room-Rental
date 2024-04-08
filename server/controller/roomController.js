@@ -99,25 +99,6 @@ const getParticularRoom = async (req, res) => {
   }
 };
 
-const postReview = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { reviewername, rating, comment } = req.body;
-    if (!reviewername || !rating || !comment) {
-      return res.status(404).send("Missing required flields hhh");
-    }
-    const roomReview = await room.findById(id);
-    if (!roomReview) {
-      return res.status(404).send("room not found ");
-    }
-    roomReview.reviews.push({ reviewername, rating, comment });
-    await roomReview.save();
-    res.status(200).json("Review successfully added");
-  } catch (error) {
-    res.status(500).send("error while submitting review", error);
-  }
-};
-
 const updateRoom = async (req, res) => {
   try {
     const { id } = req.params;
@@ -159,33 +140,14 @@ const deleteRoom = async (req, res) => {
   }
 };
 
-const updateBookingStatus = async () => {
-  try {
-    const currentDate = new Date();
-
-    const expiredBookings = await room.find({
-      bookingEndDate: { $lte: currentDate },
-    });
-
-    for (const room of expiredBookings) {
-      await room.findByIdAndUpdate(room._id, { booked: false });
-    }
-    console.log("Booking status updated successfully.");
-  } catch (error) {
-    console.error("Error updating booking status:", error);
-  }
-};
-
 const uploadMiddleware = upload.array("images");
 
 module.exports = {
   getAllRoom,
   getRenterRoom,
   getParticularRoom,
-  postReview,
   roomPost,
   updateRoom,
   deleteRoom,
   uploadMiddleware,
-  updateBookingStatus,
 };

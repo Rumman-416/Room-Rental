@@ -37,22 +37,6 @@ const roomSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  reviews: [
-    {
-      reviewername: {
-        type: String,
-        required: true,
-      },
-      rating: {
-        type: Number,
-        required: true,
-      },
-      comment: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

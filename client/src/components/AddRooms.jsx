@@ -161,7 +161,7 @@ const AddRooms = () => {
           <input
             type="button"
             value="Upload"
-            className="h-8 w-20 bg-yellow-500 cursor-pointer"
+            className="h-8 w-20 bg-[#DFA8E4] cursor-pointer"
             onClick={handleSubmit}
           />
         </div>

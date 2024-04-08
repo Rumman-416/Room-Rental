@@ -10,8 +10,7 @@ const useAuth = () => {
       const decodedToken = parseJwt(token);
       if (decodedToken) {
         const userId = decodedToken.userId;
-        const userName = decodedToken.username;
-        dispatch(login({ userId, userName }));
+        dispatch(login({ userId }));
       }
     }
   };

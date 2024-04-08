@@ -41,12 +41,9 @@ const loginUser = async (req, res) => {
     }
 
     // Generate JWT
-    const token = jwt.sign(
-      { userId: user._id, username: user.username },
-      "secret"
-    );
+    const token = jwt.sign({ userId: user._id }, "secret");
 
-    res.json({ userId: user._id, username: user.username, token });
+    res.json({ userId: user._id, token });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server Error" });
@@ -58,7 +55,7 @@ const ProtectedRoute = (req, res) => {
 };
 
 // Middleware to verify JWT
-async function verifyToken(req, res, next) {
+function verifyToken(req, res, next) {
   const token = req.headers.authorization;
   if (!token) {
     return res.status(403).json({ message: "Token not provided" });
@@ -69,7 +66,6 @@ async function verifyToken(req, res, next) {
       return res.status(401).json({ message: "Invalid token" });
     }
     req.userId = decoded.userId;
-    req.userName = decoded.username; // Attach username to request object
     next();
   });
 }

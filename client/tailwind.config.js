@@ -12,10 +12,13 @@ export default {
       }
 =======
     extend: {},
+<<<<<<< HEAD
     fontFamily: {
       title: ["Rubik", "sans-serif"],
 >>>>>>> a7bc0e27805161c3ba7983faa1f8b12ddac7ad7a
     },
+=======
+>>>>>>> parent of a7bc0e2 (review system added and getting username through jwt token)
   },
   plugins: [],
 };

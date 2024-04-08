@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 const AllRooms = () => {
   const [rooms, setRooms] = useState([]);
@@ -30,7 +29,7 @@ const AllRooms = () => {
   );
 
   return (
-    <div className=" m-5">
+    <div style={{ padding: "10px" }}>
       <div>
 <<<<<<< HEAD
         {}
@@ -67,10 +66,11 @@ const AllRooms = () => {
           />
         </form>
       </div>
-      <h5>All Rooms</h5>
+      <h5 style={{ color: "#DFA8E4" }}>All Rooms</h5>
 
       <div>
         {filteredRooms.map((room) => (
+<<<<<<< HEAD
           <div key={room._id} className=" border-2 m-2 p-5 border-black">
             <Link to={`/room/${room._id}`}>
               <h3>{room.name}</h3>
@@ -97,6 +97,42 @@ const AllRooms = () => {
               )}
             </Link>
 >>>>>>> a7bc0e27805161c3ba7983faa1f8b12ddac7ad7a
+=======
+          <div
+            key={room._id}
+            style={{
+              marginBottom: "10px",
+              border: "1px solid gray",
+              padding: "10px",
+            }}
+          >
+            <h3>{room.name}</h3>
+            <p>
+              Phone:{" "}
+              <span style={{ color: "blue", fontWeight: "bold" }}>
+                {room.phone}
+              </span>
+            </p>
+            <p>Address: {room.address}</p>
+            <p>City: {room.city}</p>
+            <p>State: {room.state}</p>
+            <p>Rent: {room.rent}</p>
+            <p>Number of Guests: {room.numOfGuest}</p>
+            {/* Render images if available */}
+            {room.images && (
+              <div>
+                {room.images.map((image, index) => (
+                  <img
+                    key={index}
+                    src={`http://localhost:3000/${image}`}
+                    alt={`Room ${index + 1}`}
+                    className="h-20 w-36"
+                    style={{ marginTop: "10px" }}
+                  />
+                ))}
+              </div>
+            )}
+>>>>>>> parent of a7bc0e2 (review system added and getting username through jwt token)
           </div>
         ))}
       </div>
