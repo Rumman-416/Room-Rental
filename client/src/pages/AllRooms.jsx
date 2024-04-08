@@ -27,7 +27,7 @@ const AllRooms = () => {
       <AdminButton/>
       <h5 style={{ color:'#DFA8E4' }}>All Rooms</h5>
       <div>
-        {/* Render each room's information */}
+        {}
         {rooms.map((room) => (
           <div key={room._id} style={{ marginBottom: "10px", border: "1px solid gray", padding: "10px" }}>
             <h3>{room.name}</h3>
@@ -37,7 +37,7 @@ const AllRooms = () => {
             <p>State: {room.state}</p>
             <p>Rent: {room.rent}</p>
             <p>Number of Guests: {room.numOfGuest}</p>
-            {/* Render images if available */}
+            {}
             {room.images && (
               <div>
                 {room.images.map((image, index) => (
