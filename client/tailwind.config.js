@@ -2,10 +2,17 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
-    fontFamily: {
-      title: ["Rubik", "sans-serif"],
+    extend: {
+      colors: {
+        BT: "#DDBA86",
+        background: "#FFFEE9",
+        brandPrimary: "#000000",
+        card: "#D6C6AE",
+      },
+      fontFamily: {
+        title: ["Rubik", "sans-serif"],
+      },
     },
+    plugins: [],
   },
-  plugins: [],
 };

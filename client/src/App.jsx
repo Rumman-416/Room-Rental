@@ -7,6 +7,7 @@ import RenterLogin from "./pages/RenterLogin";
 import Home from "./pages/Home";
 import RenterRegister from "./pages/RenterRegister";
 import ParticularRoom from "./pages/ParticularRoom";
+import HomePage from "./pages/HomePage";
 
 const App = () => {
   const { checkLocalStorage } = useAuth();
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/renter-dashboard" element={<DashBoard />} />
         <Route path="/bookrooms" element={<AllRooms />} />
         <Route path="/room/:roomId" element={<ParticularRoom />} />
+        <Route path="/homepg" element={<HomePage />} />
       </Routes>
     </>
   );
