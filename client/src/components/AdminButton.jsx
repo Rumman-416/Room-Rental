@@ -22,14 +22,14 @@ const AdminButton = () => {
         <input
           type="button"
           value="ADD"
-          className="h-10 bg-[#DFA8E4] w-44 rounded-lg cursor-pointer"
+          className="h-10 bg-yellow-500 w-44 rounded-lg cursor-pointer"
           onClick={handleAddClick}
         />
 
         <input
           type="button"
           value="SHOW"
-          className="h-10 bg-[#DFA8E4] w-44 rounded-lg cursor-pointer"
+          className="h-10 bg-yellow-500 w-44 rounded-lg cursor-pointer"
           onClick={handleShowClick}
         />
       </div>

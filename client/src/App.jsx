@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import useAuth from "./utils/authUtils";
 import DashBoard from "./pages/DashBoard";
@@ -22,7 +22,7 @@ const App = () => {
         <Route path="/register" element={<RenterRegister />} />
         <Route path="/renter-dashboard" element={<DashBoard />} />
         <Route path="/bookrooms" element={<AllRooms />} />
-        <Route path="/rooms" element={<ParticularRoom />} />
+        <Route path="/room/:roomId" element={<ParticularRoom />} />
       </Routes>
     </>
   );

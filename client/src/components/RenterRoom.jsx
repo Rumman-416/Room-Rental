@@ -18,7 +18,6 @@ const RenterRoom = () => {
           { userId }
         );
         setRooms(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching rooms:", error);
       }
@@ -55,26 +54,48 @@ const RenterRoom = () => {
         <form>
           <input
             type="text"
-            className="h-8 rounded-md"
+            className="h-8 rounded-md border-2 border-yellow-200"
             placeholder="search city or state..."
             onChange={handleSearchInputChange}
           />
         </form>
       </div>
-      <h5 className=" text-[#DFA8E4]">All Rooms</h5>
+      <h5 className=" text-yellow-500">All Rooms</h5>
 
       <div>
         {filteredRooms.map((room) => (
-          <div key={room._id} className=" border-2">
-            <h3>{room.name}</h3>
-            <p>
-              Phone: <span>{room.phone}</span>
-            </p>
-            <p>Address: {room.address}</p>
-            <p>City: {room.city}</p>
-            <p>State: {room.state}</p>
-            <p>Rent: {room.rent}</p>
-            <p>Number of Guests: {room.numOfGuest}</p>
+          <div
+            key={room._id}
+            className=" shadow-md shadow-slate-300 bg-slate-50 rounded-xl m-5 p-5"
+          >
+            <div className="flex gap-1">
+              <h3 className=" font-title font-medium"> Name: </h3>
+              <span> {room.name}</span>
+            </div>
+            <div className="flex gap-1">
+              <p className=" font-title font-medium">Phone:</p>
+              <span>{room.phone}</span>
+            </div>
+            <div className="flex gap-1">
+              <p className=" font-title font-medium">Address:</p>
+              <span> {room.address}</span>
+            </div>
+            <div className="flex gap-1">
+              <p className=" font-title font-medium">City:</p>{" "}
+              <span>{room.city}</span>
+            </div>
+            <div className="flex gap-1">
+              <p className=" font-title font-medium">State</p>:
+              <span>{room.state}</span>
+            </div>
+            <div className="flex gap-1">
+              <p className=" font-title font-medium">Rent:</p>
+              <span>{room.rent}</span>
+            </div>
+            <div className="flex gap-1">
+              <p className=" font-title font-medium">Number of Guests:</p>
+              <span>{room.numOfGuest}</span>
+            </div>
             {/* Render images if available */}
             {room.images && (
               <div>
