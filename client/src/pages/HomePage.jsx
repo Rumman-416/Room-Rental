@@ -46,7 +46,7 @@ function HomePage() {
         </button>
       </div>
       <div class="text-center mt-4 bg-card py-2">
-        <p class="text-black-500">footer copyright</p>
+        <p class="text-black-500">footer %c copyright</p>
       </div>
     </div>
   );
