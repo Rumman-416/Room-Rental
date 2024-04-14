@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import backgroundImage from "../assets/images/roberto-nickson-so3wgJLwDxo-unsplash.jpg";
 
 const RenterRegister = () => {
   const navigate = useNavigate();
@@ -22,7 +24,6 @@ const RenterRegister = () => {
       );
       console.log(response.data); // Log the response from the server
       window.alert("registered successfully");
-
       // Redirect to login page after successful registration
       navigate("/login");
     } catch (error) {
@@ -31,51 +32,71 @@ const RenterRegister = () => {
   };
 
   return (
-    <>
-      <div className="flex flex-col justify-center items-center">
-        <h1>Signup</h1>
-        <form onSubmit={submitHandler} className="flex flex-col gap-3">
-          <span>
-            <label>Name:</label>
+    <div
+      className="flex justify-center items-center min-h-screen bg-cover bg-center"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
+      <div className="bg-background bg-opacity-60 backdrop-filter backdrop-blur-sm p-7 py-4 rounded-md max-w-md text-black text-sm">
+
+        <h1 className="text-2xl font-bold mb-6 text-center">Register</h1>
+        <form onSubmit={submitHandler} className="flex flex-col gap-4">
+        <div>
+            <label htmlFor="name" className="block mb-1">
+              Full Name
+            </label>
             <input
               type="text"
-              name="name"
-              className="border-2"
+              id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-2 rounded-md bg-gray-200 text-black"
             />
-          </span>
-          <span>
-            <label>Email:</label>
+          </div>
+          <div>
+            <label htmlFor="name" className="block mb-1">
+               Email
+            </label>
             <input
-              type="email"
-              name="email"
-              className="border-2"
+              type="text"
+              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 rounded-md bg-gray-200 text-black"
             />
-          </span>
-          <span>
-            <label>Password:</label>
+          </div>
+          <div>
+            <label htmlFor="password" className="block mb-1">
+               Password
+            </label>
             <input
               type="password"
-              name="password"
-              className="border-2"
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 rounded-md bg-gray-200 text-black"
             />
-          </span>
-          <Link to="/login" className="text-blue-400">
-            Already have an account ? Click here to login
-          </Link>
+          </div>
+          <div>
+            <label htmlFor="confirmPassword" className="block mb-1">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              className="w-full px-4 py-2 rounded-md bg-gray-200 text-black"
+            />
+          </div>
           <input
             type="submit"
-            value="Register"
-            className="border-2 bg-slate-500"
+            value="Sign In"
+            className="bg-BT hover:bg-background text-black font-bold py-2 px-4 rounded-md cursor-pointer"
           />
+<p className="text-black-600 text-center mt-4">
+Already Created an Account? <Link to="/login" className="text-black-800 font-bold">Log In</Link>
+          </p>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
