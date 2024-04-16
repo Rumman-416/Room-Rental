@@ -2,13 +2,14 @@ import React from "react";
 
 const Namenav = () => {
   return (
-    <div className="bg-yellow-500 h-12 flex items-center">
+    <div className="bg-BT h-12 flex items-center"> 
+    
       <input
         type="button"
         value="<--"
-        className="h-8 w-8 bg-yellow-500 cursor-pointer m-2"
+        className="h-8 w-8 bg-BT cursor-pointer m-2  " 
       />
-      <span className="text-center flex-1">Hello Name!</span>
+      <span className="text-center flex-1 text-brandPrimary">Hello Name!</span> 
     </div>
   );
 };

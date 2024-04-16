@@ -1,26 +1,28 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import backgroundImage from "../assets/images/dashboard.jpg";
 
 const AddRooms = () => {
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [rent, setRent] = useState("");
   const [numOfGuest, setNumOfGuest] = useState("");
+  const [gender, setGender] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
   const [images, setImages] = useState([]);
   const userId = useSelector((state) => state.auth.userId);
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setImages([...images, ...files]); // Concatenate new files with existing images
+    setImages([...images, ...files]);
   };
 
   const handleSubmit = async () => {
     try {
-      console.log("Images:", images);
       if (
         !name ||
         !phone ||
@@ -29,6 +31,8 @@ const AddRooms = () => {
         !state ||
         !rent ||
         !numOfGuest ||
+        !gender ||
+        !dateOfBirth ||
         !images.length
       ) {
         return window.alert(
@@ -59,13 +63,11 @@ const AddRooms = () => {
       formData.append("state", state);
       formData.append("rent", rent);
       formData.append("numOfGuest", numOfGuest);
+      formData.append("gender", gender);
+      formData.append("dateOfBirth", dateOfBirth);
 
-      console.log("Before map, images:", images);
-
-      // Append images to formData using map
-      const imageFiles = images.map((image) => {
+      images.forEach((image) => {
         formData.append("images", image);
-        return image;
       });
 
       await axios.post("http://localhost:3000/dashboard", formData, {
@@ -76,7 +78,6 @@ const AddRooms = () => {
 
       window.alert("Data added successfully");
 
-      // Reset input fields
       setName("");
       setPhone("");
       setAddress("");
@@ -84,89 +85,120 @@ const AddRooms = () => {
       setState("");
       setRent("");
       setNumOfGuest("");
+      setGender("");
+      setDateOfBirth("");
       setImages([]);
       window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
+
   return (
-    <>
-      <div className="flex flex-col items-center gap-5">
-        <div className="flex gap-5">
-          <h5>Name</h5>
+    <div className="max-h-screen flex items-center justify-center bg-cover " style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <div className="bg-background ml-1 mr-1 p-4 rounded-r-md rounded-l-md  max-w-md opacity-90">
+        <h3 className="text-2xl font-semibold mb-4 text-center">
+          Registration Form
+        </h3>
+        <div className="space-y-2">
           <input
             type="text"
-            className="border-2"
+            placeholder="Name"
+            className="w-full border border-gray-400 rounded-md py-2 px-4"
+            value={name}
             onChange={(e) => setName(e.target.value)}
           />
-        </div>
-        <div className="flex gap-5">
-          <h5>Phone</h5>
           <input
             type="number"
-            className="border-2"
+            placeholder="Phone"
+            className="w-full border border-gray-400 rounded-md py-2 px-4"
+            value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
-        </div>
-        <div className="flex gap-5">
-          <h5>Room Address</h5>
           <input
             type="text"
-            className="border-2"
+            placeholder="Room Address"
+            className="w-full border border-gray-400 rounded-md py-2 px-4"
+            value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
-        </div>
-        <div className="flex gap-5">
-          <h5>City</h5>
           <input
             type="text"
-            className="border-2"
+            placeholder="City"
+            className="w-full border border-gray-400 rounded-md py-2 px-4"
+            value={city}
             onChange={(e) => setCity(e.target.value)}
           />
-        </div>
-        <div className="flex gap-5">
-          <h5>State</h5>
           <input
             type="text"
-            className="border-2"
+            placeholder="State"
+            className="w-full border border-gray-400 rounded-md py-2 px-4"
+            value={state}
             onChange={(e) => setState(e.target.value)}
           />
-        </div>
-        <div className="flex gap-5">
-          <h5>Rent</h5>
           <input
             type="number"
-            className="border-2"
+            placeholder="Rent"
+            className="w-full border border-gray-400 rounded-md py-2 px-4"
+            value={rent}
             onChange={(e) => setRent(e.target.value)}
           />
-        </div>
-        <div className="flex gap-5">
-          <h5>Number of Guests</h5>
           <input
             type="number"
-            className="border-2"
+            placeholder="Number of Guests"
+            className="w-full border border-gray-400 rounded-md py-2 px-4"
+            value={numOfGuest}
             onChange={(e) => setNumOfGuest(e.target.value)}
+          />
+          <div className="flex justify gap-6 px-2">
+            <div className="flex gap-2">
+              <input
+                type="radio"
+                id="male"
+                name="gender"
+                value="male"
+                checked={gender === "male"}
+                onChange={(e) => setGender(e.target.value)}
+              />
+              <label htmlFor="male">Male</label>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="radio"
+                id="female"
+                name="gender"
+                value="female"
+                checked={gender === "female"}
+                onChange={(e) => setGender(e.target.value)}
+              />
+              <label htmlFor="female">Female</label>
+            </div>
+          </div>
+          <input
+            type="date"
+            placeholder="Date of Birth"
+            className="w-full border border-gray-400 rounded-md py-2 px-4"
+            value={dateOfBirth}
+            onChange={(e) => setDateOfBirth(e.target.value)}
           />
         </div>
         <div>
           <input
             type="file"
+            className="mt-3"
             accept="image/jpeg, image/png"
             multiple
             onChange={handleImageChange}
           />
         </div>
-        <div>
-          <input
-            type="button"
-            value="Upload"
-            className="h-8 w-20 bg-yellow-500 cursor-pointer"
-            onClick={handleSubmit}
-          />
-        </div>
+        <input
+          type="button"
+          value="Upload"
+          className="h-10 w-full mt-4 bg-BT text-black rounded-md cursor-pointer"
+          onClick={handleSubmit}
+        />
       </div>
-    </>
+    </div>
   );
 };
 
