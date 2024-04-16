@@ -54,19 +54,19 @@ const RenterRoom = () => {
         <form>
           <input
             type="text"
-            className="h-8 rounded-md border-2 border-yellow-200"
-            placeholder="search city or state..."
+            className="h-8 px-2  rounded-md border-2 border-BT"
+            placeholder="search City or State..."
             onChange={handleSearchInputChange}
           />
         </form>
       </div>
-      <h5 className=" text-yellow-500">All Rooms</h5>
+      <h5 className=" text-black">All Rooms</h5>
 
       <div>
         {filteredRooms.map((room) => (
           <div
             key={room._id}
-            className=" shadow-md shadow-slate-300 bg-slate-50 rounded-xl m-5 p-5"
+            className=" shadow-md shadow-slate-300 bg-background rounded-xl m-6 px-4 py-3"
           >
             <div className="flex gap-1">
               <h3 className=" font-title font-medium"> Name: </h3>
@@ -96,6 +96,7 @@ const RenterRoom = () => {
               <p className=" font-title font-medium">Number of Guests:</p>
               <span>{room.numOfGuest}</span>
             </div>
+            
             {/* Render images if available */}
             {room.images && (
               <div>
@@ -111,7 +112,7 @@ const RenterRoom = () => {
             )}
             <div className="flex">
               <button
-                className=" h-8 p-2 bg-red-500 text-white m-5"
+                className=" h-8 w-20 px-1 bg-red-600 text-white m-5"
                 onClick={() => onClickDeleteRoom(room._id)}
               >
                 Delete

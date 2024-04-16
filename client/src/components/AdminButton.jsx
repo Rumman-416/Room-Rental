@@ -23,8 +23,8 @@ const AdminButton = () => {
         <input
           type="button"
           value="ADD"
-          className={`h-10 ml-1 px-14 rounded-lg cursor-pointer ${
-            add ? "bg-BT text-black " : "bg-background text-black"
+          className={`h-10 ml-1 px-14 rounded-lg cursor-pointer  ${
+            add ? "bg-BT text-black " : "bg-background text-black border-background-200 "
           }`}
           onClick={handleAddClick}
         />

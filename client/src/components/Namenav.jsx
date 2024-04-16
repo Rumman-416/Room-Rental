@@ -9,7 +9,7 @@ const Namenav = () => {
         value="<--"
         className="h-8 w-8 bg-BT cursor-pointer m-2  " 
       />
-      <span className="text-center flex-1 text-brandPrimary">Hello Name!</span> 
+      <span className="text-center text-xl flex-1 text-brandPrimary">Hello Name!</span> 
     </div>
   );
 };
