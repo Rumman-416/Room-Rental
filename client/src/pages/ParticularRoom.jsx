@@ -36,7 +36,6 @@ const ParticularRoom = () => {
   };
 
   const handleSaveDates = () => {
-    // You can perform any actions here to save both from and to dates
     console.log("From Date:", fromDate);
     console.log("To Date:", toDate);
   };

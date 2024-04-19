@@ -11,8 +11,6 @@ const AddRooms = () => {
   const [state, setState] = useState("");
   const [rent, setRent] = useState("");
   const [numOfGuest, setNumOfGuest] = useState("");
-  const [gender, setGender] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
   const [images, setImages] = useState([]);
   const userId = useSelector((state) => state.auth.userId);
 
@@ -31,8 +29,6 @@ const AddRooms = () => {
         !state ||
         !rent ||
         !numOfGuest ||
-        !gender ||
-        !dateOfBirth ||
         !images.length
       ) {
         return window.alert(
@@ -63,8 +59,6 @@ const AddRooms = () => {
       formData.append("state", state);
       formData.append("rent", rent);
       formData.append("numOfGuest", numOfGuest);
-      formData.append("gender", gender);
-      formData.append("dateOfBirth", dateOfBirth);
 
       images.forEach((image) => {
         formData.append("images", image);
@@ -85,8 +79,6 @@ const AddRooms = () => {
       setState("");
       setRent("");
       setNumOfGuest("");
-      setGender("");
-      setDateOfBirth("");
       setImages([]);
       window.location.reload();
     } catch (error) {
@@ -95,7 +87,7 @@ const AddRooms = () => {
   };
 
   return (
-    <div className="max-h-screen flex items-center justify-center bg-cover " style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <div className="max-h-screen flex items-center justify-center ">
       <div className="bg-background ml-1 mr-1 p-4 rounded-r-md rounded-l-md  max-w-md opacity-90">
         <h3 className="text-2xl font-semibold mb-4 text-center">
           Registration Form
@@ -150,39 +142,7 @@ const AddRooms = () => {
             value={numOfGuest}
             onChange={(e) => setNumOfGuest(e.target.value)}
           />
-          <div className="flex justify gap-6 px-2">
-            <div className="flex gap-2">
-              <input
-                type="radio"
-                id="male"
-                name="gender"
-                value="male"
-                checked={gender === "male"}
-                onChange={(e) => setGender(e.target.value)}
-              />
-              <label htmlFor="male">Male</label>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="radio"
-                id="female"
-                name="gender"
-                value="female"
-                checked={gender === "female"}
-                onChange={(e) => setGender(e.target.value)}
-              />
-              <label htmlFor="female">Female</label>
-            </div>
-          </div>
-          <input
-            type="date"
-            placeholder="Date of Birth"
-            className="w-full border border-gray-400 rounded-md py-2 px-4"
-            value={dateOfBirth}
-            onChange={(e) => setDateOfBirth(e.target.value)}
-          />
-        </div>
-        <div>
+
           <input
             type="file"
             className="mt-3"
