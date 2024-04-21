@@ -65,67 +65,78 @@ const RenterRoom = () => {
 
   return (
     <div className="p-5 flex flex-col justify-center items-center gap-5">
-      <div className="h-8 px-2 gap-2  rounded-md border-2 border-BT flex items-center">
+      <div className=" p-1 gap-2 w-11/12 rounded-xl border-2 border-BT flex items-center">
         <FaSearch className="text-BT" />
         <input
           type="text"
           placeholder="search City or State..."
           onChange={handleSearchInputChange}
-          className="ocus:border-none focus:outline-none"
+          className="focus:border-none focus:outline-none "
         />
       </div>
       <h5 className=" text-black text-2xl">Your Rooms</h5>
-
       <div>
         {filteredRooms.map((room) => (
           <div
             key={room._id}
-            className=" border-2 border-[#eca63c] rounded-xl p-5 m-5 flex flex-col gap-1 font-light"
+            className=" border-2 border-BT rounded-xl p-5 m-5 flex flex-col gap-3 font-light"
           >
-            <div className="flex gap-1">
-              <h3 className=" font-title font-normal text-[#eca63c]">Name :</h3>
-              <span> {room.name}</span>
+            <div className="flex gap-1 items-center">
+              <h3 className=" font-title font-normal text-BT">Name :</h3>
+              <span className="font-light text-sm text-gray-600">
+                {room.name}
+              </span>
             </div>
-            <div className=" flex flex-col gap-2">
+            <div className=" flex flex-col gap-3">
               <div className="flex gap-1 items-center">
-                <p className=" font-title font-medium text-[#eca63c] flex items-center gap-1">
+                <p className=" font-title font-medium text-BT flex items-center gap-1">
                   <BsTelephone /> :
                 </p>
-                <span>{room.phone}</span>
+                <span className="font-light text-sm text-gray-600">
+                  {room.phone}
+                </span>
               </div>
-              <div className="flex gap-1">
-                <p className=" font-title font-normal text-[#eca63c]">
-                  Address:
-                </p>
-                <span> {room.address}</span>
+              <div className="flex gap-1 items-center">
+                <p className=" font-title font-normal text-BT">Address:</p>
+                <span className="font-light text-sm text-gray-600">
+                  {room.address}
+                </span>
               </div>
-              <div className=" flex justify-between">
-                <div className="flex gap-1">
-                  <p className=" font-title font-normal text-[#eca63c]">
-                    City:
-                  </p>
-                  <span>{room.city}</span>
+              <div className=" flex justify-between ">
+                <div className="flex gap-1 items-center">
+                  <p className=" font-title font-normal text-BT">City:</p>
+                  <span className="font-light text-sm text-gray-600">
+                    {room.city}
+                  </span>
                 </div>
-                <div className="flex gap-1">
-                  <p className=" font-title font-normal text-[#eca63c]">
-                    State :
-                  </p>
-                  <span>{room.state}</span>
+                <div className="flex gap-1 items-center">
+                  <p className=" font-title font-normal text-BT">State :</p>
+                  <span className="font-light text-sm text-gray-600">
+                    {room.state}
+                  </span>
                 </div>
               </div>
               <div className="flex justify-between">
-                <div className=" flex gap-2">
-                  <p className=" font-title font-normal text-[#eca63c]">
-                    Rent:
-                  </p>
-                  <span>{room.rent}</span>
+                <div className=" flex gap-2 items-center">
+                  <p className=" font-title font-normal text-BT">Rent:</p>
+                  <span className="font-light text-sm text-gray-600">
+                    ₹{room.rent}
+                  </span>
                 </div>
-                <div className=" flex gap-2">
-                  <p className=" font-title font-normal text-[#eca63c] flex items-center gap-2">
+                <div className=" flex gap-2 items-center">
+                  <p className=" font-title font-normal text-BT flex items-center gap-2">
                     <BsFillPeopleFill />:
                   </p>
-                  <span>{room.numOfGuest}</span>
+                  <span className="font-light text-sm text-gray-600">
+                    {room.numOfGuest} guest
+                  </span>
                 </div>
+              </div>
+              <div className=" font-title font-normal text-BT">
+                Your room description :{" "}
+                <span className="font-light text-sm text-gray-600">
+                  {room.description}
+                </span>
               </div>
             </div>
             <div className=" flex flex-col justify-center items-center">
@@ -143,6 +154,7 @@ const RenterRoom = () => {
                 >
                   {room.images.map((image, index) => (
                     <img
+                      key={index}
                       src={`http://localhost:3000/${image}`}
                       alt={`${index + 1}`}
                       className=" bg-contain p-5 w-full"
@@ -152,7 +164,7 @@ const RenterRoom = () => {
               )}
               <div className="flex">
                 <button
-                  className=" h-8 w-20 px-1 bg-red-600 text-white m-5"
+                  className=" px-5 py-1 bg-red-600 text-white m-5 rounded-md"
                   onClick={() => onClickDeleteRoom(room._id)}
                 >
                   Delete

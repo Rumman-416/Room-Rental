@@ -4,13 +4,27 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Reviews from "../components/Reviews";
-import { useSelector } from "react-redux";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Navbar from "../components/Navbar";
+import { BsFillPeopleFill } from "react-icons/bs";
 
 const ParticularRoom = () => {
   const { roomId } = useParams();
   const [room, setRoom] = useState(null);
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: false,
+    autoplaySpeed: 3000,
+  };
 
   useEffect(() => {
     const fetchRoomDetails = async () => {
@@ -42,46 +56,96 @@ const ParticularRoom = () => {
 
   return (
     <div>
+      <Navbar />
       {room ? (
-        <div>
-          <h2>{room.name}</h2>
-          <p>Phone: {room.phone}</p>
-          <p>Address: {room.address}</p>
-          <p>City: {room.city}</p>
-          <p>State: {room.state}</p>
-          <p>Rent: {room.rent}</p>
-          <p>Number of Guests: {room.numOfGuest}</p>
-          <div>
-            <label>From Date:</label>
-            <DatePicker
-              selected={fromDate}
-              onChange={handleFromDateChange}
-              dateFormat="dd/MM/yyyy"
-              className=" border-2 border-yellow-100"
-            />
-          </div>
-          <div>
-            <label>To Date:</label>
-            <DatePicker
-              selected={toDate}
-              onChange={handleToDateChange}
-              dateFormat="dd/MM/yyyy"
-              className=" border-2 border-yellow-100"
-            />
-          </div>
-          <button onClick={handleSaveDates}>Save Dates</button>
-          {room.images && (
-            <div>
-              {room.images.map((image, index) => (
+        <div className=" container mx-auto px-5 flex flex-col gap-3">
+          <div className=" flex justify-center items-center w-full my-3">
+            {room.images && room.images.length <= 1 ? (
+              <div className=" w-11/12 h-1/4 relative overflow-hidden ">
                 <img
-                  key={index}
-                  src={`http://localhost:3000/${image}`}
-                  alt={`Room ${index + 1}`}
-                  className="h-20 w-36 m-2"
+                  src={`http://localhost:3000/${room.images[0]}`}
+                  className=" w-full  bg-contain rounded-lg "
                 />
-              ))}
+              </div>
+            ) : (
+              <Slider
+                {...settings}
+                className=" w-11/12 h-1/4 relative overflow-hidden "
+              >
+                {room.images.map((image, index) => (
+                  <img
+                    src={`http://localhost:3000/${image}`}
+                    alt={`${index + 1}`}
+                    className=" bg-contain p-5 w-full"
+                  />
+                ))}
+              </Slider>
+            )}
+          </div>
+          <div className=" flex justify-between">
+            <p className=" font-bold flex gap-1">
+              ₹ {room.rent} <span className=" font-normal"> night</span>{" "}
+            </p>
+            <div className=" flex items-center gap-1">
+              <BsFillPeopleFill className=" text-BT" /> {room.numOfGuest} guest
             </div>
-          )}
+          </div>
+          <div className=" flex flex-col justify-center items-stretch gap-3">
+            <div className=" flex justify-between">
+              <label>Check In :</label>
+              <DatePicker
+                selected={fromDate}
+                onChange={handleFromDateChange}
+                dateFormat="dd/MM/yyyy"
+                className=" border-2 border-red-200"
+              />
+            </div>
+            <div className=" flex justify-between">
+              <label>Check Out :</label>
+              <DatePicker
+                selected={toDate}
+                onChange={handleToDateChange}
+                dateFormat="dd/MM/yyyy"
+                className=" border-2 border-red-200"
+              />
+            </div>
+          </div>
+
+          <div className=" font-semibold">
+            Address:{" "}
+            <span className=" text-gray-500 font-normal text-[15px]">
+              {room.address}
+            </span>
+          </div>
+          <div className=" flex flex-col gap-3 justify-between">
+            <div className=" font-semibold">
+              City:{" "}
+              <span className=" text-gray-500 font-normal text-[15px]">
+                {room.city}
+              </span>
+            </div>
+            <div className=" font-semibold">
+              State:{" "}
+              <span className=" text-gray-500 font-normal text-[15px]">
+                {room.state}
+              </span>
+            </div>
+            <div className=" text-gray-500 text-[15px] flex flex-col gap-3">
+              <p>{room.description}</p>
+              <h2 className=" font-normal text-base text-BT">
+                Hosted by <span className=" font-semibold">{room.name}</span>
+              </h2>
+            </div>
+          </div>
+
+          <div className=" flex justify-center items-center my-5">
+            <button
+              onClick={handleSaveDates}
+              className=" bg-BT p-3 text-white rounded-lg w-2/4"
+            >
+              Book
+            </button>
+          </div>
           <div>
             <Reviews />
           </div>

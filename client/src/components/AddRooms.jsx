@@ -9,6 +9,7 @@ const AddRooms = () => {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
+  const [description, setDescription] = useState("");
   const [rent, setRent] = useState("");
   const [numOfGuest, setNumOfGuest] = useState("");
   const [images, setImages] = useState([]);
@@ -27,6 +28,7 @@ const AddRooms = () => {
         !address ||
         !city ||
         !state ||
+        !description ||
         !rent ||
         !numOfGuest ||
         !images.length
@@ -57,6 +59,7 @@ const AddRooms = () => {
       formData.append("address", address);
       formData.append("city", city);
       formData.append("state", state);
+      formData.append("description", description);
       formData.append("rent", rent);
       formData.append("numOfGuest", numOfGuest);
 
@@ -77,6 +80,7 @@ const AddRooms = () => {
       setAddress("");
       setCity("");
       setState("");
+      setDescription("");
       setRent("");
       setNumOfGuest("");
       setImages([]);
@@ -88,10 +92,8 @@ const AddRooms = () => {
 
   return (
     <div className="max-h-screen flex items-center justify-center ">
-      <div className="bg-background ml-1 mr-1 p-4 rounded-r-md rounded-l-md  max-w-md opacity-90">
-        <h3 className="text-2xl font-semibold mb-4 text-center">
-          Registration Form
-        </h3>
+      <div className=" ml-1 mr-1 p-4 rounded-r-md rounded-l-md  max-w-md opacity-90">
+        <h3 className="text-2xl font-medium mb-4 text-center">Add Rooms</h3>
         <div className="space-y-2">
           <input
             type="text"
@@ -129,6 +131,13 @@ const AddRooms = () => {
             onChange={(e) => setState(e.target.value)}
           />
           <input
+            type="text"
+            placeholder="Add a description about your home"
+            className="w-full border border-gray-400 rounded-md py-2 px-4"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <input
             type="number"
             placeholder="Rent"
             className="w-full border border-gray-400 rounded-md py-2 px-4"
@@ -145,7 +154,7 @@ const AddRooms = () => {
 
           <input
             type="file"
-            className="mt-3"
+            className="my-3 flex flex-col"
             accept="image/jpeg, image/png"
             multiple
             onChange={handleImageChange}

@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
+import { BsFillPeopleFill } from "react-icons/bs";
+import Navbar from "../components/Navbar";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const AllRooms = () => {
   const [rooms, setRooms] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,6 +25,16 @@ const AllRooms = () => {
     fetchRooms();
   }, []);
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: false,
+    autoplaySpeed: 3000,
+  };
+
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
@@ -30,50 +46,67 @@ const AllRooms = () => {
   );
 
   return (
-    <div className="m-3">
-      <div>
-        <form>
-          <div className="border border-black flex h-8 rounded-md items-center">
-            <input
-              type="text"
-              className="h-full w-full"
-              placeholder="search city or state..."
-              onChange={handleSearchInputChange}
-            />
-            <FaSearch className="text-2xl text-gray-300" />
-          </div>
-        </form>
+    <div className=" bg-slate-100 ">
+      <Navbar />
+      <div className=" bg-white">
+        <div className=" border-b-2 border-BT flex h-8 items-center mx-3 px-4">
+          <input
+            type="text"
+            className="h-full w-full  focus:outline-none"
+            placeholder="search city or state..."
+            onChange={handleSearchInputChange}
+          />
+          <FaSearch className="text-2xl text-BT bg-white" />
+        </div>
       </div>
-      <h5>All Rooms</h5>
 
-      <div>
+      <div className=" grid grid-cols-1 py-3">
         {filteredRooms.map((room) => (
-          <div key={room._id} className="  p-3.5 shadow-2xl rounded-3xl m-1">
+          <div key={room._id} className=" shadow-2xl rounded-3xl m-3 ">
             <Link to={`/room/${room._id}`}>
-              {/* Render images if available */}
-              {room.images && (
-                <div className=" bg-slate-800 rounded-2xl">
+              {room.images && room.images.length <= 1 ? (
+                <div className="w-full h-[10rem] relative overflow-hidden ">
+                  <img
+                    src={`http://localhost:3000/${room.images[0]}`}
+                    className=" w-full  bg-contain rounded-lg "
+                  />
+                </div>
+              ) : (
+                <Slider
+                  {...settings}
+                  className=" w-full h-[25vh] relative overflow-hidden rounded-t-3xl"
+                >
                   {room.images.map((image, index) => (
                     <img
-                      key={index}
                       src={`http://localhost:3000/${image}`}
-                      alt={`Room ${index + 1}`}
-                      className="h-40 w-full rounded-2xl"
+                      alt={`${index + 1}`}
+                      className=" bg-contain  w-full"
+                      key={index}
                     />
                   ))}
-                </div>
+                </Slider>
               )}
-              <div className=" pl-2 pr-2">
-                <div className="flex justify-between">
-                  <h3 className="font-bold text-xl">{room.name}</h3>
-                  <p>rating</p>
+              <div className=" p-4">
+                <div className=" flex justify-between">
+                  <div className="flex justify-start gap-1">
+                    {/* <h3 className="font-bold text-xl">{room.name}</h3> */}
+                    <p>{room.city} ,</p>
+                    <p> {room.state}</p>
+                  </div>
+                  <div className=" flex items-center gap-1">
+                    <FaStar className=" text-BT" /> 4.8
+                  </div>
                 </div>
-                <p>City: {room.city}</p>
-                <p>State: {room.state}</p>
+                <div className=" flex items-center gap-1">
+                  <BsFillPeopleFill className=" text-BT" /> {room.numOfGuest}
+                  <span> guest</span>
+                </div>
                 <div className="flex flex-row">
-                  <p>Rent: ₹ </p> <p className="font-bold">{room.rent}</p>
+                  <p>₹ </p>
+                  <p className="font-bold">
+                    {room.rent} <span className=" font-normal"> night</span>
+                  </p>
                 </div>
-                <p>Number of Guests: {room.numOfGuest}</p>
               </div>
             </Link>
           </div>

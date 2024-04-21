@@ -4,13 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        BT: "#DDBA86",
-        background: "#FFFEE9",
+        BT: "#FF5757",
+        // BT: "#DDBA86",
+        background: "#F8aaaa",
         brandPrimary: "#000000",
         card: "#D6C6AE",
       },
       fontFamily: {
-        title: ["Rubik", "sans-serif"],
+        title: ["Open Sans", "sans-serif"],
       },
     },
     plugins: [],

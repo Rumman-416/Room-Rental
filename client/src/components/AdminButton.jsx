@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import AddRooms from "./AddRooms";
 import RenterRoom from "./RenterRoom";
-import backgroundImage from "../assets/images/dashboard.jpg"; // Import your background image
 
 const AdminButton = () => {
   const [add, setAdd] = useState(true);
@@ -25,8 +24,8 @@ const AdminButton = () => {
           value="ADD"
           className={`h-10 ml-1 px-14 rounded-lg cursor-pointer  ${
             add
-              ? "bg-BT text-black "
-              : "bg-background text-black border-background-200 "
+              ? "bg-BT text-white font-bold"
+              : "bg-background text-white border-background-200 font-normal"
           }`}
           onClick={handleAddClick}
         />
@@ -35,7 +34,9 @@ const AdminButton = () => {
           type="button"
           value="SHOW"
           className={`h-10 px-14  ml-1 mr-1 rounded-lg cursor-pointer ${
-            show ? "bg-BT text-black " : "bg-background text-black "
+            show
+              ? "bg-BT text-white font-bold"
+              : "bg-background text-white font-normal"
           }`}
           onClick={handleShowClick}
         />

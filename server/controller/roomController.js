@@ -24,6 +24,7 @@ const roomPost = async (req, res) => {
       !req.body.phone ||
       !req.body.city ||
       !req.body.state ||
+      !req.body.description ||
       !req.body.rent ||
       !req.body.numOfGuest ||
       !req.files ||
@@ -43,6 +44,7 @@ const roomPost = async (req, res) => {
       address: req.body.address,
       city: req.body.city,
       state: req.body.state,
+      description: req.body.description,
       rent: req.body.rent,
       numOfGuest: req.body.numOfGuest,
       images: images,
