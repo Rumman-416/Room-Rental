@@ -33,9 +33,6 @@ const ParticularRoom = () => {
           `http://localhost:3000/dashboard/${roomId}`
         );
         setRoom(roomResponse.data);
-
-        /* const reviewsResponse = await axios.get(`http://localhost:3000/reviews/${roomId}`);
-        setReviews(reviewsResponse.data);*/
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -76,6 +73,7 @@ const ParticularRoom = () => {
         order_id: { roomId },
         handler: function (response) {
           alert(response.razorpay_payment_id);
+          console.log("booked 123");
         },
         prefill: {
           name: "Your Name",
@@ -86,7 +84,7 @@ const ParticularRoom = () => {
           address: "Your Address",
         },
         theme: {
-          color: "#F37254",
+          color: "#FF5757",
         },
       };
 

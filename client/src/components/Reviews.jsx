@@ -25,7 +25,7 @@ const Reviews = () => {
   };
   useEffect(() => {
     fetchRoomDetails();
-  }, [reviews]);
+  }, [rating]);
 
   const reviewSubmit = async () => {
     try {
