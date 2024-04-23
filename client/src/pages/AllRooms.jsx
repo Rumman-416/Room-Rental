@@ -8,9 +8,13 @@ import Navbar from "../components/Navbar";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 const AllRooms = () => {
   const [rooms, setRooms] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = useWindowSize();
+
   useEffect(() => {
     const fetchRooms = async () => {
       try {
@@ -37,6 +41,7 @@ const AllRooms = () => {
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
+    setCurrentPage(1); // Reset to first page when search query changes
   };
 
   const filteredRooms = rooms.filter(
@@ -44,6 +49,13 @@ const AllRooms = () => {
       room.state.toLowerCase().includes(searchQuery.toLowerCase()) ||
       room.city.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredRooms.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className=" bg-slate-100 ">
@@ -60,8 +72,8 @@ const AllRooms = () => {
         </div>
       </div>
 
-      <div className=" grid grid-cols-1 py-3">
-        {filteredRooms.map((room) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 py-3">
+        {currentItems.map((room) => (
           <div key={room._id} className=" shadow-2xl rounded-3xl m-3 ">
             <Link to={`/room/${room._id}`}>
               {room.images && room.images.length <= 1 ? (
@@ -112,8 +124,62 @@ const AllRooms = () => {
           </div>
         ))}
       </div>
+      <Pagination
+        itemsPerPage={itemsPerPage}
+        totalItems={filteredRooms.length}
+        paginate={paginate}
+      />
     </div>
   );
+};
+
+const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
+  const pageNumbers = Math.ceil(totalItems / itemsPerPage);
+
+  return (
+    <nav>
+      <ul className="flex justify-center mt-4">
+        {Array.from({ length: pageNumbers }, (_, i) => i + 1).map((number) => (
+          <li key={number} className="mx-1">
+            <button
+              onClick={() => paginate(number)}
+              className="px-3 py-1 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+            >
+              {number}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
+
+const useWindowSize = () => {
+  const [size, setSize] = useState(getWindowSize());
+
+  useEffect(() => {
+    function handleResize() {
+      setSize(getWindowSize());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return size;
+};
+
+const getWindowSize = () => {
+  const { innerWidth } = window;
+  if (innerWidth < 640) {
+    return 1; // Phone screen
+  } else if (innerWidth < 1024) {
+    return 2; // Tablet
+  } else if (innerWidth < 1440) {
+    return 4; // Laptop
+  } else {
+    return 4; // Monitor
+  }
 };
 
 export default AllRooms;
