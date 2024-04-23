@@ -64,7 +64,7 @@ const RoomBooking = () => {
             minDate={startDate || new Date()}
           />
         </div>
-        <button type="submit">Book Room vbnvbn</button>
+        <button type="submit">Book Room right now</button>
       </form>
     </div>
   );
