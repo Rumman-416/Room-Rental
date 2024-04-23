@@ -172,13 +172,13 @@ const useWindowSize = () => {
 const getWindowSize = () => {
   const { innerWidth } = window;
   if (innerWidth < 640) {
-    return 1; // Phone screen
+    return 10; // Phone screen
   } else if (innerWidth < 1024) {
-    return 2; // Tablet
+    return 20; // Tablet
   } else if (innerWidth < 1440) {
-    return 4; // Laptop
+    return 30; // Laptop
   } else {
-    return 4; // Monitor
+    return 30; // Monitor
   }
 };
 

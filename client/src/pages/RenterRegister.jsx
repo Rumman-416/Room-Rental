@@ -22,12 +22,12 @@ const RenterRegister = () => {
           renter: true,
         }
       );
-      console.log(response.data); // Log the response from the server
+      console.log(response.data);
       window.alert("registered successfully");
-      // Redirect to login page after successful registration
       navigate("/login");
     } catch (error) {
       console.error("Registration error:", error.response.data);
+      window.alert("error", error);
     }
   };
 
@@ -37,10 +37,9 @@ const RenterRegister = () => {
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className="bg-background bg-opacity-60 backdrop-filter backdrop-blur-sm p-7 py-4 rounded-md max-w-md text-black text-sm">
-
         <h1 className="text-2xl font-bold mb-6 text-center">Register</h1>
         <form onSubmit={submitHandler} className="flex flex-col gap-4">
-        <div>
+          <div>
             <label htmlFor="name" className="block mb-1">
               Full Name
             </label>
@@ -54,7 +53,7 @@ const RenterRegister = () => {
           </div>
           <div>
             <label htmlFor="name" className="block mb-1">
-               Email
+              Email
             </label>
             <input
               type="text"
@@ -66,7 +65,7 @@ const RenterRegister = () => {
           </div>
           <div>
             <label htmlFor="password" className="block mb-1">
-               Password
+              Password
             </label>
             <input
               type="password"
@@ -91,8 +90,11 @@ const RenterRegister = () => {
             value="Sign In"
             className="bg-BT hover:bg-background text-black font-bold py-2 px-4 rounded-md cursor-pointer"
           />
-<p className="text-black-600 text-center mt-4">
-Already Created an Account? <Link to="/login" className="text-black-800 font-bold">Log In</Link>
+          <p className="text-black-600 text-center mt-4">
+            Already Created an Account?
+            <Link to="/login" className="text-black-800 font-bold">
+              Log In
+            </Link>
           </p>
         </form>
       </div>

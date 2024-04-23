@@ -3,20 +3,18 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// import Reviews from "../components/Reviews";
+import Reviews from "../components/Reviews";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Navbar from "../components/Navbar";
 import { BsFillPeopleFill } from "react-icons/bs";
 
-
 const ParticularRoom = () => {
   const { roomId } = useParams();
   const [room, setRoom] = useState(null);
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
-  //const [reviews, setReviews] = useState([]);
 
   const settings = {
     dots: true,
@@ -31,10 +29,12 @@ const ParticularRoom = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const roomResponse = await axios.get(`http://localhost:3000/dashboard/${roomId}`);
+        const roomResponse = await axios.get(
+          `http://localhost:3000/dashboard/${roomId}`
+        );
         setRoom(roomResponse.data);
 
-       /* const reviewsResponse = await axios.get(`http://localhost:3000/reviews/${roomId}`);
+        /* const reviewsResponse = await axios.get(`http://localhost:3000/reviews/${roomId}`);
         setReviews(reviewsResponse.data);*/
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -63,17 +63,17 @@ const ParticularRoom = () => {
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
     document.body.appendChild(script);
-  
+
     // Wait for the Razorpay library to load
     script.onload = () => {
       const options = {
         key: "rzp_test_Jcis91fPkftIw1",
         amount: room.rent * 100,
         currency: "INR",
-        name: "Your Company Name",
+        name: "Rent Kar",
         description: "Room Booking Payment",
-        
-        order_id: {roomId},
+
+        order_id: { roomId },
         handler: function (response) {
           alert(response.razorpay_payment_id);
         },
@@ -89,12 +89,12 @@ const ParticularRoom = () => {
           color: "#F37254",
         },
       };
-  
+
       // Create a new instance of Razorpay
       const razorpay = new window.Razorpay(options);
       razorpay.open();
     };
-  
+
     // Handle script loading error
     script.onerror = () => {
       console.error("Failed to load Razorpay library");
@@ -116,7 +116,10 @@ const ParticularRoom = () => {
                 />
               </div>
             ) : (
-              <Slider {...settings} className="w-11/12 h-1/4 relative overflow-hidden">
+              <Slider
+                {...settings}
+                className="w-11/12 h-1/4 relative overflow-hidden"
+              >
                 {room.images.map((image, index) => (
                   <img
                     key={index}
@@ -198,13 +201,7 @@ const ParticularRoom = () => {
               Book Room
             </button>
           </div>
-          <div>
-  {/* {reviews.length > 0 ? (
-    <Reviews reviews={reviews} />
-  ) : (
-    <div>No reviews available</div>
-  )} */}
-</div>
+          <Reviews />
         </div>
       ) : (
         <div>Loading...</div>

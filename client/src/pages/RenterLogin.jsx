@@ -4,9 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/AuthSlice/authSlice";
-// import bgImage from '../assets/images/';
-// import starIcon from '../assets/images/star.png';
-// import eyeIcon from '../assets/images/hide.png';
 import bgImage from "../assets/images/bg.jpg";
 import starIcon from "../assets/images/star (1).png";
 import eyeIcon from "../assets/images/hide.png";
@@ -35,18 +32,16 @@ const RenterLogin = () => {
       const decodedToken = parseJwt(token);
       if (decodedToken) {
         const userId = decodedToken.userId;
-        // Dispatch action to update user ID in Redux store
         dispatch(login({ userId }));
         console.log(userId);
         window.alert("Logged in successfully");
-        // Redirect to dashboard after successful login
         navigate("/renter-dashboard");
       } else {
         throw new Error("Failed to parse JWT token");
       }
     } catch (error) {
       console.error("Login error:", error);
-      window.alert("Login error");
+      window.alert("Login error", error);
     }
   };
 
@@ -75,19 +70,19 @@ const RenterLogin = () => {
       <div className="bg-background rounded-tl-[1000px] shadow-lg p-8 max-w-md w-full">
         <div className="mb-10 mt-20 flex items-center">
           <img src={starIcon} alt="Leaf Icon" className="h-5 mr-0 ml-2" />
-          <h1 className="text-2xl font-bold text-amber-700 ml-6">
-            Welcome Back
-          </h1>
+          <h1 className="text-2xl font-bold text-BT ml-6">Welcome Back</h1>
         </div>
 
-        <p className="text-black-600 mb-6 ml-3">Login to your account</p>
+        <p className="text-black-600 mb-6 ml-3 text-white font-bold">
+          Login to your account
+        </p>
         <form onSubmit={submitHandler} className="flex flex-col gap-3">
           <div className="relative">
             <input
               type="email"
               name="email"
               placeholder="Email"
-              className="border border-gray-400 rounded-lg py-2 px-4 w-full"
+              className="border border-gray-400 rounded-lg py-2 px-4 w-full bg-white"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
