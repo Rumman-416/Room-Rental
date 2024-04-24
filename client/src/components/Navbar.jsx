@@ -36,19 +36,23 @@ const Navbar = () => {
     };
   }, []);
   return (
-    <div className=" bg-white sticky top-0 lg:static z-50">
+    <div className=" bg-white sticky top-0 z-50">
       {isScroller ? (
         <div className="flex justify-between items-center p-3 bg-white ">
           <CiMenuBurger className="h-8 w-8" onClick={toggleNav} />
-
-          <img src="/Images/logo.png" alt="" className="h-12" />
+          <Link to="/bookrooms">
+            <img
+              src="/Images/logo.png"
+              alt=""
+              className="h-12 cursor-pointer"
+            />
+          </Link>
           <div className="flex items-center">
-            <Link>
-              <AiOutlineMail className="h-7 w-7 font-light hover:text-[#ffc107]" />
-            </Link>
-            <BiDotsVertical
-              className="h-8 w-7 font-thin"
-              onClick={toggleNav2}
+            <input
+              type="button"
+              value="Log Out"
+              className=" p-2 bg-BT border-2 border-BT rounded-xl text-white hover:bg-transparent
+                hover:text-BT "
             />
           </div>
           <div
@@ -60,77 +64,36 @@ const Navbar = () => {
           >
             {nav && (
               <ul className="py-4 font-medium text-sm">
-                <Link to="/">
-                  <li className="uppercase bg bg-red-200 p-2">Home</li>
+                <Link to="/bookrooms">
+                  <li className="uppercase bg p-2">Home</li>
                 </Link>
                 <Link to={"/about-us"}>
                   <li className="uppercase p-2">About Us</li>
                 </Link>
-
-                <li className="uppercase p-2 relative" onClick={toggleServices}>
-                  <span className=" flex justify-between items-center">
-                    <span> Services</span>
-                    <IoIosArrowDown
-                      className={`h-4 w-4 transition-all duration-500 text-[#ffc107] ${
-                        services ? "rotate-180" : ""
-                      }`}
-                    />
-                  </span>
-                  <ul
-                    className={`absolute top-full left-0 bg-white w-64 ${
-                      services ? "opacity-100" : "opacity-0 pointer-events-none"
-                    }`}
-                  >
-                    <li className="p-2 uppercase text-sm font-light">
-                      website development
-                    </li>
-                    <li className="p-2 uppercase text-sm font-light">seo</li>
-                    <li className="p-2 uppercase text-sm font-light">smm</li>
-                    <li className="p-2 uppercase text-sm font-light">ppc</li>
-                    <li className="p-2 uppercase text-sm font-light">
-                      mobile app development
-                    </li>
-                    <li className="p-2 uppercase text-sm font-light">
-                      media buying
-                    </li>
-                  </ul>
-                </li>
-                <Link to="/clientele">
-                  <li className={`uppercase p-2${services ? " mt-36" : ""}`}>
-                    Clientele
-                  </li>
+                <Link to={"/services"}>
+                  <li className="uppercase p-2">services</li>
                 </Link>
-                <Link to={"/blog"}>
-                  <li className="uppercase p-2">Blog</li>
-                </Link>
-                <Link to={"/contact-us"}>
-                  <li className="uppercase p-2">Contact us</li>
+                <Link to={"/renter-dashboard"}>
+                  <li className="uppercase p-2">Dashboard</li>
                 </Link>
               </ul>
             )}
           </div>
-          {/* <div
-              className={`absolute top-full right-0 h-[100vh] w-64 transition-all duration-500 ${
-                nav2
-                  ? " bg-white h-[100vh] w-64 shadow-md"
-                  : " pointer-events-none right-[-1vw]"
-              }`}
-            >
-              {nav2 && <div></div>}
-            </div> */}
         </div>
       ) : (
-        <div className=" bg-white ">
+        <div className=" bg-white sticky top-0">
           <nav className="flex justify-between items-center px-[4rem] py-[1rem] ">
-            <img
-              src="https://www.socialtitli.com/assets/images/logo.png"
-              alt=""
-              className=" h-[5rem]"
-            />
+            <Link to="/bookrooms">
+              <img
+                src="/Images/logo.png"
+                alt=""
+                className="h-[4rem] cursor-pointer"
+              />
+            </Link>
             <div className=" flex items-center gap-6">
-              <Link to={"/"}>
-                <h1 className=" uppercase font-semibold hover:text-[#f4a210] transition-all duration-300">
-                  home
+              <Link to={"/bookrooms"}>
+                <h1 className="uppercase font-semibold hover:text-BT transition-all duration-300">
+                  Search Rooms
                 </h1>
               </Link>
               <Link to={"/about-us"}>
@@ -143,36 +106,21 @@ const Navbar = () => {
                   services
                 </h1>
               </Link>
-              <Link to={"/clientele"}>
+              <Link to={"/renter-dashboard"}>
                 <h1 className=" uppercase font-semibold hover:text-[#f4a210] transition-all duration-300">
-                  clientele
-                </h1>
-              </Link>
-              <Link to={"/blog"}>
-                <h1 className=" uppercase font-semibold hover:text-[#f4a210] transition-all duration-300">
-                  blog
-                </h1>
-              </Link>
-              <Link to={"/contact-us"}>
-                <h1 className=" uppercase font-semibold hover:text-[#f4a210] transition-all duration-300">
-                  contact us
+                  Dashboard
                 </h1>
               </Link>
             </div>
-            <div className=" flex gap-3">
-              <AiOutlineMail className=" text-3xl" />
-              <HiOutlineMenuAlt2 className=" text-3xl " onClick={toggleNav2} />
+            <div>
+              <input
+                type="button"
+                value="Log Out"
+                className=" p-3 bg-BT border-2 border-BT rounded-xl text-white hover:bg-transparent
+                hover:text-BT "
+              />
             </div>
           </nav>
-          {/* <div
-              className={`absolute top-full right-0 h-[100vh] w-64 transition-all duration-500 ${
-                nav2
-                  ? " bg-white h-[100vh] w-64 shadow-md"
-                  : " pointer-events-none right-[-1vw]"
-              }`}
-            >
-              {nav2 && <div></div>}
-            </div> */}
         </div>
       )}
     </div>

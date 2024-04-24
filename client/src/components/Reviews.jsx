@@ -93,7 +93,7 @@ const Reviews = () => {
           <div className=" p-3 border-b border-gray-300" key={index}>
             <h1>{review.reviewername}</h1>
             <div className=" flex">
-              <FaStar className=" text-yellow-400" /> {review.rating}
+              <FaStar className=" text-BT" /> {review.rating}
             </div>
             <h1>{review.comment}</h1>
           </div>

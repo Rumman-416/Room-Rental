@@ -9,12 +9,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Navbar from "../components/Navbar";
 import { BsFillPeopleFill } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
 
 const ParticularRoom = () => {
   const { roomId } = useParams();
   const [room, setRoom] = useState(null);
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
+  const [fullImage, setFullImage] = useState(null);
 
   const settings = {
     dots: true,
@@ -33,6 +35,7 @@ const ParticularRoom = () => {
           `http://localhost:3000/dashboard/${roomId}`
         );
         setRoom(roomResponse.data);
+        window.scrollTo(0, 0);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -99,37 +102,63 @@ const ParticularRoom = () => {
     };
   };
 
+  const handleViewFullImage = (image) => {
+    setFullImage(image); // Set full image state to the clicked image
+  };
+
+  const handleCloseFullImage = () => {
+    setFullImage(null); // Revert full image state to null
+  };
+
   return (
     <div>
       <Navbar />
       {room ? (
-        <div className="container mx-auto px-5 flex flex-col gap-3">
+        <div className="container mx-auto px-5 flex flex-col gap-3 md:px-[8rem] lg:px-[10rem] xl:px-[14rem]">
+          {fullImage && (
+            <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-75">
+              <img
+                src={`http://localhost:3000/${fullImage}`}
+                alt="Full Image"
+                className="max-w-full max-h-full"
+              />
+              <IoClose
+                onClick={handleCloseFullImage}
+                className="absolute top-5 right-5  text-white text-3xl"
+              />
+            </div>
+          )}
+
           <div className="flex justify-center items-center w-full my-3">
             {room.images && room.images.length <= 1 ? (
-              <div className="w-11/12 h-1/4 relative overflow-hidden">
+              <div className="w-11/12 h-auto relative overflow-hidden flex justify-center items-center sm:w-9/12 lg:w-7/12">
                 <img
                   src={`http://localhost:3000/${room.images[0]}`}
                   className="w-full bg-contain rounded-lg"
                   alt="Room"
+                  onClick={() => handleViewFullImage(room.images[0])}
                 />
               </div>
             ) : (
               <Slider
                 {...settings}
-                className="w-11/12 h-1/4 relative overflow-hidden"
+                className="w-auto h-[9rem] mp:h-[11rem] lp:h-[13rem] sm:h-[15rem]  
+                md:h-[18rem] lg:h-[20rem]   xl:h-[24rem] xl:w-8/12 relative overflow-hidden flex justify-center items-start"
               >
                 {room.images.map((image, index) => (
                   <img
                     key={index}
                     src={`http://localhost:3000/${image}`}
                     alt={`Room ${index + 1}`}
-                    className="bg-contain p-5 w-full"
+                    className="bg-contain p-5 w-full bg-center"
+                    onClick={() => handleViewFullImage(image)}
                   />
                 ))}
               </Slider>
             )}
           </div>
-          <div className="flex justify-between">
+
+          <div className="flex justify-between ">
             <p className="font-bold flex gap-1">
               ₹ {room.rent} <span className="font-normal">night</span>
             </p>
