@@ -6,7 +6,7 @@ import { AiOutlineClose } from "react-icons/ai";
 
 const UpdateForm = ({ roomId, closeForm, onUpdateSuccess }) => {
   const [roomDetails, setRoomDetails] = useState(null);
-  const [updateSuccess, setUpdateSuccess] = useState(false); // State variable for update success message
+  const [updateSuccess, setUpdateSuccess] = useState(null); // State variable for update success message
 
   const [formData, setFormData] = useState({
     name: "",
@@ -54,6 +54,7 @@ const UpdateForm = ({ roomId, closeForm, onUpdateSuccess }) => {
      
     } catch (error) {
       console.error("Error updating room details:", error);
+      setUpdateSuccess(false);
     }
   };
 
@@ -69,11 +70,16 @@ const UpdateForm = ({ roomId, closeForm, onUpdateSuccess }) => {
           <AiOutlineClose className="text-2xl"/>
         </button>
         <h1 className="text-xl font-bold mb-4">Update Room Details</h1>
-        {updateSuccess && (
+        {updateSuccess ===true && (
           <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
             <strong className="font-bold">Success!</strong>
             <span className="block sm:inline"> Data updated successfully.</span>
           </div>
+        ) } {updateSuccess ===false && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong className="font-bold">Failed!</strong>
+            <span className="block sm:inline"> Cannot update data!</span>
+            </div>
         )}
         <form onSubmit={handleSubmit}>
           <label className="block mb-2">
