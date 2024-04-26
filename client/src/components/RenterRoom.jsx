@@ -10,9 +10,11 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
 
 const RenterRoom = () => {
+
   const [rooms, setRooms] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showUpdate, setShowUpdate] = useState(false);
+  const [selectedRoomId, setSelectedRoomId] = useState(null); // State to store selected room id
   const userId = useSelector((state) => state.auth.userId);
 
   useEffect(() => {
@@ -63,6 +65,21 @@ const RenterRoom = () => {
     autoplaySpeed: 3000,
   };
 
+
+const handleUpdateSuccess = async () => {
+  try {
+    const response = await axios.get(`http://localhost:3000/dashboard/${selectedRoomId}`);
+    // Find the index of the updated room in the rooms array
+    const updatedRoomIndex = rooms.findIndex(room => room._id === selectedRoomId);
+    // Create a new array with updated room details
+    const updatedRooms = [...rooms];
+    updatedRooms[updatedRoomIndex] = response.data;
+    // Update state with the new room details
+    setRooms(updatedRooms);
+  } catch (error) {
+    console.error("Error fetching updated room details:", error);
+  }
+};
   return (
     <div className="p-5 flex flex-col justify-center items-center gap-5">
       <div className=" p-1 gap-2 w-11/12 rounded-xl border-2 border-BT flex items-center">
@@ -169,12 +186,25 @@ const RenterRoom = () => {
                 >
                   Delete
                 </button>
-                <UpdateForm rooomId={room._id} />
+                <button className="px-5 py-1 bg-blue-600 text-white m-5 rounded-md"
+                onClick={() => {
+                  setSelectedRoomId(room._id);
+                  setShowUpdate(true);
+                }}
+              >
+                Update
+              </button>
               </div>
             </div>
           </div>
         ))}
       </div>
+       {/* Conditionally render UpdateForm */}
+       {showUpdate && (
+        <div className="update-form-popup">
+        <UpdateForm roomId={selectedRoomId} closeForm={() => setShowUpdate(false)} onUpdateSuccess={handleUpdateSuccess} />
+        </div>
+      )}
     </div>
   );
 };
