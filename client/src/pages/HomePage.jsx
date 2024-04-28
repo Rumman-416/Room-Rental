@@ -50,8 +50,8 @@ function HomePage() {
           </button>
         </div>
       </div>
-      <div class="text-center mt-4 bg-BT bg-opacity-50 py-2">
-        <p class="text-black-500">footer %c copyright</p>
+      <div className="text-center mt-4 bg-BT bg-opacity-50 py-2">
+        <p className="text-black-500">footer %c copyright</p>
       </div>
     </div>
   );

@@ -5,7 +5,6 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/AuthSlice/authSlice";
 import bgImage from "../assets/images/bg.jpg";
-import starIcon from "../assets/images/star (1).png";
 import eyeIcon from "../assets/images/hide.png";
 
 const RenterLogin = () => {
@@ -35,7 +34,7 @@ const RenterLogin = () => {
         dispatch(login({ userId }));
         console.log(userId);
         window.alert("Logged in successfully");
-        navigate("/renter-dashboard");
+        navigate("/landlord-dashboard");
       } else {
         throw new Error("Failed to parse JWT token");
       }
@@ -69,7 +68,7 @@ const RenterLogin = () => {
     >
       <div className="bg-background rounded-tl-[1000px] shadow-lg p-8 max-w-md w-full">
         <div className="mb-10 mt-20 flex items-center">
-          <img src={starIcon} alt="Leaf Icon" className="h-5 mr-0 ml-2" />
+          {/* <img src={starIcon} alt="Leaf Icon" className="h-5 mr-0 ml-2" /> */}
           <h1 className="text-2xl font-bold text-BT ml-6">Welcome Back</h1>
         </div>
 

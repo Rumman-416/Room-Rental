@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const routeroom = require("./routes/roomRoutes");
 const routeruser = require("./routes/userRoutes");
 const cors = require("cors");
+const { updateBookingStatus } = require("./controller/roomController");
 
 const app = express();
 const PORT = 3000;
@@ -12,6 +13,8 @@ app.use(cors());
 app.use("/dashboard", routeroom);
 app.use("/api/users", routeruser);
 app.use(express.static("uploads"));
+
+setInterval(updateBookingStatus, 86400000);
 
 mongoose
   .connect(URI)

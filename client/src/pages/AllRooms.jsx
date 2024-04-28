@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { BsFillPeopleFill } from "react-icons/bs";
+import { IoMdAlert } from "react-icons/io";
 import Navbar from "../components/Navbar";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -72,59 +73,89 @@ const AllRooms = () => {
       </div>
       <div className=" min-h-[80vh]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 py-3 m-5 lp:mx-10 sm:mx-28 md:mx-8 lg:mx-10 xl:mx-20">
-          {currentItems.map((room) => (
-            <div
-              key={room._id}
-              className=" shadow-lg rounded-3xl md:m-3 hover:shadow-2xl transition-all duration-300 xl:mx-5"
-            >
-              <Link to={`/room/${room._id}`}>
-                {room.images && room.images.length <= 1 ? (
-                  <div className="w-full h-[13rem] lp:h-[16rem] relative overflow-hidden">
-                    <img
-                      src={`http://localhost:3000/${room.images[0]}`}
-                      className=" w-screen  bg-contain rounded-t-3xl h-[14rem] lp:h-[16rem]"
-                    />
-                  </div>
-                ) : (
-                  <Slider
-                    {...settings}
-                    className=" w-full h-[13rem] lp:h-[16rem] relative overflow-hidden rounded-t-3xl"
-                  >
-                    {room.images.map((image, index) => (
+          {currentItems.map((room) => {
+            // Calculate average rating
+            const ratings = room.reviews.map((review) => review.rating);
+            const averageRating =
+              ratings.length > 0
+                ? ratings.reduce((acc, curr) => acc + curr) / ratings.length
+                : 0;
+
+            return (
+              <div
+                key={room._id}
+                className=" shadow-lg rounded-3xl md:m-3 hover:shadow-2xl transition-all duration-300 xl:mx-5"
+              >
+                <Link to={`/room/${room._id}`}>
+                  {room.images && room.images.length <= 1 ? (
+                    <div className="w-full h-[13rem] lp:h-[16rem] relative overflow-hidden">
                       <img
-                        src={`http://localhost:3000/${image}`}
-                        alt={`${index + 1}`}
-                        className=" bg-contain w-screen rounded-t-3xl h-[14rem] lp:h-[16rem]"
-                        key={index}
+                        src={`http://localhost:3000/${room.images[0]}`}
+                        className=" w-screen  bg-contain rounded-t-3xl h-[14rem] lp:h-[16rem]"
                       />
-                    ))}
-                  </Slider>
-                )}
-                <div className=" p-4">
-                  <div className=" flex justify-between">
-                    <div className="flex justify-start gap-1">
-                      {/* <h3 className="font-bold text-xl">{room.name}</h3> */}
-                      <p>{room.city} ,</p>
-                      <p> {room.state}</p>
+                    </div>
+                  ) : (
+                    <Slider
+                      {...settings}
+                      className=" w-full h-[13rem] lp:h-[16rem] relative overflow-hidden rounded-t-3xl"
+                    >
+                      {room.images.map((image, index) => (
+                        <img
+                          src={`http://localhost:3000/${image}`}
+                          alt={`${index + 1}`}
+                          className=" bg-contain w-screen rounded-t-3xl h-[14rem] lp:h-[16rem]"
+                          key={index}
+                        />
+                      ))}
+                    </Slider>
+                  )}
+                  <div className=" p-4">
+                    <div className=" flex justify-between">
+                      <div className="flex justify-start gap-1">
+                        {/* <h3 className="font-bold text-xl">{room.name}</h3> */}
+                        <p>{room.city} ,</p>
+                        <p> {room.state}</p>
+                      </div>
+                      {ratings.length > 0 ? (
+                        <div className=" flex items-center gap-1">
+                          <FaStar className=" text-BT" />{" "}
+                          {averageRating.toFixed(1)}
+                        </div>
+                      ) : (
+                        <div className=" text-sm font-light text-BT">
+                          No Reviews Yet
+                        </div>
+                      )}
                     </div>
                     <div className=" flex items-center gap-1">
-                      <FaStar className=" text-BT" /> 4.8
+                      <BsFillPeopleFill className=" text-BT" />{" "}
+                      {room.numOfGuest}
+                      <span> guest</span>
+                    </div>
+                    <div className="flex flex-row justify-between items-center">
+                      <div className=" flex gap-1">
+                        <p>₹ </p>
+                        <p className="font-bold">
+                          {room.rent}{" "}
+                          <span className=" font-normal"> night</span>
+                        </p>
+                      </div>
+                      <div>
+                        {room.booked ? (
+                          <div className=" flex bg-BT justify-between p-1 text-white items-center gap-2 rounded-md">
+                            <IoMdAlert />
+                            Booked
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
                     </div>
                   </div>
-                  <div className=" flex items-center gap-1">
-                    <BsFillPeopleFill className=" text-BT" /> {room.numOfGuest}
-                    <span> guest</span>
-                  </div>
-                  <div className="flex flex-row">
-                    <p>₹ </p>
-                    <p className="font-bold">
-                      {room.rent} <span className=" font-normal"> night</span>
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            </div>
-          ))}
+                </Link>
+              </div>
+            );
+          })}
         </div>
       </div>
       <Pagination

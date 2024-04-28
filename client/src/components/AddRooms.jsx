@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import backgroundImage from "../assets/images/dashboard.jpg";
 
 const AddRooms = () => {
   const [name, setName] = useState("");

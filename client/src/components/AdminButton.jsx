@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AddRooms from "./AddRooms";
-import RenterRoom from "./RenterRoom";
+import LandLordRoom from "./LandLordRoom";
 
 const AdminButton = () => {
   const [add, setAdd] = useState(true);
@@ -42,7 +42,7 @@ const AdminButton = () => {
         />
       </div>
       {add && <AddRooms />}
-      {show && <RenterRoom />}
+      {show && <LandLordRoom />}
     </div>
   );
 };

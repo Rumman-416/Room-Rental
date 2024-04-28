@@ -11,7 +11,7 @@ const Home = () => {
           className="h-10 w-20 bg-yellow-500"
         />
       </Link>
-      <Link to="/renter-dashboard">
+      <Link to="/landlord-dashboard">
         <input
           type="button"
           value="Dashboard"

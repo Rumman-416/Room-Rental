@@ -10,7 +10,6 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
 
 const RenterRoom = () => {
-
   const [rooms, setRooms] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showUpdate, setShowUpdate] = useState(false);
@@ -21,7 +20,7 @@ const RenterRoom = () => {
     const fetchRenterRooms = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:3000/dashboard/renter",
+          "http://localhost:3000/dashboard/landlord",
           { userId }
         );
         setRooms(response.data);
@@ -65,21 +64,24 @@ const RenterRoom = () => {
     autoplaySpeed: 3000,
   };
 
-
-const handleUpdateSuccess = async () => {
-  try {
-    const response = await axios.get(`http://localhost:3000/dashboard/${selectedRoomId}`);
-    // Find the index of the updated room in the rooms array
-    const updatedRoomIndex = rooms.findIndex(room => room._id === selectedRoomId);
-    // Create a new array with updated room details
-    const updatedRooms = [...rooms];
-    updatedRooms[updatedRoomIndex] = response.data;
-    // Update state with the new room details
-    setRooms(updatedRooms);
-  } catch (error) {
-    console.error("Error fetching updated room details:", error);
-  }
-};
+  const handleUpdateSuccess = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/dashboard/${selectedRoomId}`
+      );
+      // Find the index of the updated room in the rooms array
+      const updatedRoomIndex = rooms.findIndex(
+        (room) => room._id === selectedRoomId
+      );
+      // Create a new array with updated room details
+      const updatedRooms = [...rooms];
+      updatedRooms[updatedRoomIndex] = response.data;
+      // Update state with the new room details
+      setRooms(updatedRooms);
+    } catch (error) {
+      console.error("Error fetching updated room details:", error);
+    }
+  };
   return (
     <div className="p-5 flex flex-col justify-center items-center gap-5">
       <div className=" p-1 gap-2 w-11/12 rounded-xl border-2 border-BT flex items-center">
@@ -92,11 +94,11 @@ const handleUpdateSuccess = async () => {
         />
       </div>
       <h5 className=" text-black text-2xl">Your Rooms</h5>
-      <div>
+      <div className=" grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
         {filteredRooms.map((room) => (
           <div
             key={room._id}
-            className=" border-2 border-BT rounded-xl p-5 m-5 flex flex-col gap-3 font-light"
+            className=" border-2 border-BT rounded-xl p-5 m-5 flex flex-col gap-3 font-light "
           >
             <div className="flex gap-1 items-center">
               <h3 className=" font-title font-normal text-BT">Name :</h3>
@@ -186,23 +188,27 @@ const handleUpdateSuccess = async () => {
                 >
                   Delete
                 </button>
-                <button className="px-5 py-1 bg-blue-600 text-white m-5 rounded-md"
-                onClick={() => {
-                  setSelectedRoomId(room._id);
-                  setShowUpdate(true);
-                }}
-              >
-                Update
-              </button>
+                <button
+                  className="px-5 py-1 bg-blue-600 text-white m-5 rounded-md"
+                  onClick={() => {
+                    setSelectedRoomId(room._id);
+                    setShowUpdate(true);
+                  }}
+                >
+                  Update
+                </button>
               </div>
             </div>
           </div>
         ))}
       </div>
-       {/* Conditionally render UpdateForm */}
-       {showUpdate && (
+      {showUpdate && (
         <div className="update-form-popup">
-        <UpdateForm roomId={selectedRoomId} closeForm={() => setShowUpdate(false)} onUpdateSuccess={handleUpdateSuccess} />
+          <UpdateForm
+            roomId={selectedRoomId}
+            closeForm={() => setShowUpdate(false)}
+            onUpdateSuccess={handleUpdateSuccess}
+          />
         </div>
       )}
     </div>

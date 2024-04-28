@@ -67,13 +67,13 @@ const Navbar = () => {
                 <Link to="/bookrooms">
                   <li className="uppercase bg p-2">Home</li>
                 </Link>
-                <Link to={"/about-us"}>
-                  <li className="uppercase p-2">About Us</li>
+                <Link to={"/Booked-rooms"}>
+                  <li className="uppercase p-2">Rooms booked</li>
                 </Link>
                 <Link to={"/services"}>
                   <li className="uppercase p-2">services</li>
                 </Link>
-                <Link to={"/renter-dashboard"}>
+                <Link to={"/landlord-dashboard"}>
                   <li className="uppercase p-2">Dashboard</li>
                 </Link>
               </ul>
@@ -96,9 +96,9 @@ const Navbar = () => {
                   Search Rooms
                 </h1>
               </Link>
-              <Link to={"/about-us"}>
+              <Link to={"/Booked-rooms"}>
                 <h1 className=" uppercase font-semibold hover:text-[#f4a210] transition-all duration-300">
-                  about us
+                  Rooms Booked
                 </h1>
               </Link>
               <Link to={"/services"}>
@@ -106,7 +106,7 @@ const Navbar = () => {
                   services
                 </h1>
               </Link>
-              <Link to={"/renter-dashboard"}>
+              <Link to={"/landlord-dashboard"}>
                 <h1 className=" uppercase font-semibold hover:text-[#f4a210] transition-all duration-300">
                   Dashboard
                 </h1>

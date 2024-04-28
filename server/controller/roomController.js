@@ -70,7 +70,7 @@ const getAllRoom = async (req, res) => {
   }
 };
 
-const getRenterRoom = async (req, res) => {
+const getLandLordRoom = async (req, res) => {
   try {
     // Ensure user is authenticated
     if (!req.body.userId) {
@@ -182,12 +182,13 @@ const uploadMiddleware = upload.array("images");
 
 module.exports = {
   getAllRoom,
-  getRenterRoom,
+  getLandLordRoom,
   getParticularRoom,
   postReview,
   roomPost,
   updateRoom,
   deleteRoom,
   uploadMiddleware,
+  updateBookingStatus,
   updateBookingStatus,
 };

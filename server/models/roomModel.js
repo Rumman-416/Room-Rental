@@ -41,6 +41,12 @@ const roomSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  bookedFrom: {
+    type: Date, // Change the type to Date to store date values
+  },
+  bookedTo: {
+    type: Date, // Change the type to Date to store date values
+  },
   reviews: [
     {
       reviewername: {

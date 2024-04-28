@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,6 +10,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Navbar from "../components/Navbar";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
+import { RiEmotionUnhappyLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 const ParticularRoom = () => {
   const { roomId } = useParams();
@@ -17,6 +19,8 @@ const ParticularRoom = () => {
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
   const [fullImage, setFullImage] = useState(null);
+  const userId = useSelector((state) => state.auth.userId);
+  const navigate = useNavigate();
 
   const settings = {
     dots: true,
@@ -57,7 +61,50 @@ const ParticularRoom = () => {
     console.log("To Date:", toDate);
   };
 
+  console.log(roomId, userId);
+
+  const updateRoom = async () => {
+    try {
+      await axios.post("http://localhost:3000/api/users/postbookedrooms", {
+        id: userId,
+        roomId: roomId,
+      });
+    } catch (error) {
+      console.error(error);
+      window.alert("error in booking user room");
+    }
+    try {
+      await axios.put(`http://localhost:3000/dashboard/${roomId}`, {
+        booked: true,
+        bookedFrom: fromDate,
+        bookedTo: toDate,
+      });
+      navigate("/Booked-rooms");
+    } catch (error) {
+      console.error(error);
+      window.alert("error in booking room");
+    }
+  };
+
   const handleBookRoom = () => {
+    if (!fromDate || !toDate) {
+      window.alert("Please select check-in and check-out dates.");
+      return;
+    }
+
+    // Check if fromDate is before toDate
+    if (fromDate.getTime() >= toDate.getTime()) {
+      window.alert("Check-out date must be after check-in date.");
+      return;
+    }
+
+    // Calculate the number of days between check-in and check-out dates
+    const millisecondsPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
+    const numberOfDays = Math.round((toDate - fromDate) / millisecondsPerDay);
+
+    // Calculate the total amount based on the number of days and room rent
+    const totalAmount = room.rent * numberOfDays;
+
     // Load the Razorpay library
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
@@ -68,7 +115,7 @@ const ParticularRoom = () => {
     script.onload = () => {
       const options = {
         key: "rzp_test_Jcis91fPkftIw1",
-        amount: room.rent * 100,
+        amount: totalAmount * 100,
         currency: "INR",
         name: "Rent Kar",
         description: "Room Booking Payment",
@@ -77,6 +124,7 @@ const ParticularRoom = () => {
         handler: function (response) {
           alert(response.razorpay_payment_id);
           console.log("booked 123");
+          updateRoom();
         },
         prefill: {
           name: "Your Name",
@@ -109,6 +157,14 @@ const ParticularRoom = () => {
   const handleCloseFullImage = () => {
     setFullImage(null); // Revert full image state to null
   };
+
+  const today = new Date();
+
+  // Set the time to 00:00:00 (start of the day)
+  today.setHours(0, 0, 0, 0);
+
+  // Set minDate to today's date
+  const minDate = today;
 
   return (
     <div>
@@ -172,6 +228,7 @@ const ParticularRoom = () => {
               <DatePicker
                 selected={fromDate}
                 onChange={handleFromDateChange}
+                minDate={minDate}
                 dateFormat="dd/MM/yyyy"
                 className="border-2 border-red-200"
               />
@@ -181,6 +238,7 @@ const ParticularRoom = () => {
               <DatePicker
                 selected={toDate}
                 onChange={handleToDateChange}
+                minDate={fromDate}
                 dateFormat="dd/MM/yyyy"
                 className="border-2 border-red-200"
               />
@@ -213,21 +271,28 @@ const ParticularRoom = () => {
               </h2>
             </div>
           </div>
+          {room.booked ? (
+            <div className=" flex justify-center items-center p-2 gap-2 bg-BT rounded-lg text-white">
+              <RiEmotionUnhappyLine className=" text-2xl" />
+              <h1>we're sorry this room is currently booked</h1>
+            </div>
+          ) : (
+            <div className="flex justify-center items-center my-5">
+              <button
+                onClick={handleSaveDates}
+                className="bg-BT p-3 text-white rounded-lg w-2/4 mr-3"
+              >
+                Save Room
+              </button>
+              <button
+                onClick={handleBookRoom}
+                className="bg-BT p-3 text-white rounded-lg w-2/4"
+              >
+                Book Room
+              </button>
+            </div>
+          )}
 
-          <div className="flex justify-center items-center my-5">
-            <button
-              onClick={handleSaveDates}
-              className="bg-BT p-3 text-white rounded-lg w-2/4 mr-3"
-            >
-              Save Room
-            </button>
-            <button
-              onClick={handleBookRoom}
-              className="bg-BT p-3 text-white rounded-lg w-2/4"
-            >
-              Book Room
-            </button>
-          </div>
           <Reviews />
         </div>
       ) : (

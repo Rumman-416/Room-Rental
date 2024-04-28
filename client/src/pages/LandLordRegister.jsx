@@ -19,7 +19,7 @@ const RenterRegister = () => {
           username: name,
           email: email,
           password: password,
-          renter: true,
+          landlord: true,
         }
       );
       console.log(response.data);

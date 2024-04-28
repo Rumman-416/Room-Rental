@@ -4,7 +4,8 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  renter: { type: Boolean, default: false },
+  landlord: { type: Boolean, default: false },
+  bookedrooms: [{ type: mongoose.Schema.Types.ObjectId, ref: "Room" }],
 });
 
 const User = mongoose.model("User", userSchema);
