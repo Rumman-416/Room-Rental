@@ -1,22 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { AiOutlineMail } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 import { CiMenuBurger } from "react-icons/ci";
-import { BiDotsVertical } from "react-icons/bi";
-import { IoIosArrowDown } from "react-icons/io";
-import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [nav2, setNav2] = useState(false);
   const [services, setServices] = useState(false);
+  const navigate = useNavigate();
 
   const toggleNav = () => {
     setNav(!nav);
-  };
-
-  const toggleNav2 = () => {
-    setNav2(!nav2);
   };
 
   const toggleServices = () => {
@@ -35,6 +29,17 @@ const Navbar = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const logout = () => {
+    try {
+      window.alert("Successfully logged out");
+      localStorage.removeItem("token");
+      // window.location.reload();
+      navigate("/login");
+    } catch (e) {
+      console.error(e);
+    }
+  };
   return (
     <div className=" bg-white sticky top-0 z-50">
       {isScroller ? (
@@ -53,6 +58,7 @@ const Navbar = () => {
               value="Log Out"
               className=" p-2 bg-BT border-2 border-BT rounded-xl text-white hover:bg-transparent
                 hover:text-BT "
+              onClick={logout}
             />
           </div>
           <div
@@ -118,6 +124,7 @@ const Navbar = () => {
                 value="Log Out"
                 className=" p-3 bg-BT border-2 border-BT rounded-xl text-white hover:bg-transparent
                 hover:text-BT "
+                onClick={logout}
               />
             </div>
           </nav>

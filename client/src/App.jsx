@@ -16,54 +16,49 @@ const App = () => {
   useEffect(() => {
     checkLocalStorage();
   }, []);
+
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LandLordLogin />} />
-        <Route path="/register" element={<LandLordRegister />} />
-        <Route path="/homepg" element={<HomePage />} />
-        <Route
-          path="/landlord-dashboard"
-          element={
-            <ProtedtedRoutes>
-              <Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route
+            path="/landlord-dashboard"
+            element={
+              <ProtedtedRoutes>
                 <DashBoard />
-              </Suspense>
-            </ProtedtedRoutes>
-          }
-        />
-        <Route
-          path="/bookrooms"
-          element={
-            <ProtedtedRoutes>
-              <Suspense>
+              </ProtedtedRoutes>
+            }
+          />
+          <Route
+            path="/bookrooms"
+            element={
+              <ProtedtedRoutes>
                 <AllRooms />
-              </Suspense>
-            </ProtedtedRoutes>
-          }
-        />
-        <Route
-          path="/room/:roomId"
-          element={
-            <ProtedtedRoutes>
-              <Suspense>
+              </ProtedtedRoutes>
+            }
+          />
+          <Route
+            path="/room/:roomId"
+            element={
+              <ProtedtedRoutes>
                 <ParticularRoom />
-              </Suspense>
-            </ProtedtedRoutes>
-          }
-        />
-        <Route
-          path="/Booked-rooms"
-          element={
-            <ProtedtedRoutes>
-              <Suspense>
+              </ProtedtedRoutes>
+            }
+          />
+          <Route
+            path="/Booked-rooms"
+            element={
+              <ProtedtedRoutes>
                 <BookedRoomsPg />
-              </Suspense>
-            </ProtedtedRoutes>
-          }
-        />
-      </Routes>
+              </ProtedtedRoutes>
+            }
+          />
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LandLordLogin />} />
+          <Route path="/register" element={<LandLordRegister />} />
+          <Route path="/homepg" element={<HomePage />} />
+        </Routes>
+      </Suspense>
     </>
   );
 };
@@ -75,4 +70,5 @@ export function ProtedtedRoutes(props) {
     return <Navigate to="/login" />;
   }
 }
+
 export default App;
