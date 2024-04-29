@@ -78,10 +78,14 @@ const RenterRoom = () => {
       updatedRooms[updatedRoomIndex] = response.data;
       // Update state with the new room details
       setRooms(updatedRooms);
+      // Close the update form
+      setShowUpdate(false);
     } catch (error) {
       console.error("Error fetching updated room details:", error);
+      // Handle the error here if necessary
     }
   };
+  
   return (
     <div className="p-5 flex flex-col justify-center items-center gap-5">
       <div className=" p-1 gap-2 w-11/12 rounded-xl border-2 border-BT flex items-center">

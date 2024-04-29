@@ -108,13 +108,14 @@ const UpdateForm = ({ roomId, closeForm, onUpdateSuccess, images: initialImages 
       setUpdateSuccess(false);
     }
   };
+  
 
   const handleCloseForm = () => {
     closeForm(); // Close the form
   };
 
   return (
-    <div className=" top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
+    <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
       <div className="bg-white rounded-lg p-8 max-w-lg w-full sm:w-auto">
         <button className="absolute top-2 right-2 text-gray-800 hover:text-gray-700" onClick={handleCloseForm}>
           <AiOutlineClose className="text-2xl"/>
