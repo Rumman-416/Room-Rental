@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaSort } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { IoMdAlert } from "react-icons/io";
@@ -14,13 +14,14 @@ const AllRooms = () => {
   const [rooms, setRooms] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortOption, setSortOption] = useState(null);
+  const [showSortDropdown, setShowSortDropdown] = useState(false); // New state for dropdown visibility
   const itemsPerPage = useWindowSize();
 
   useEffect(() => {
     const fetchRooms = async () => {
       try {
         const response = await axios.get("http://localhost:3000/dashboard");
-        console.log(response.data);
         setRooms(response.data);
       } catch (error) {
         console.error("Error fetching rooms:", error);
@@ -41,7 +42,17 @@ const AllRooms = () => {
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
-    setCurrentPage(1); // Reset to first page when search query changes
+    setCurrentPage(1);
+  };
+
+  const handleSortOptionChange = (option) => {
+    setSortOption(option);
+    setCurrentPage(1);
+    setShowSortDropdown(false); // Close dropdown after selecting an option
+  };
+
+  const toggleSortDropdown = () => {
+    setShowSortDropdown(!showSortDropdown);
   };
 
   const filteredRooms = rooms.filter(
@@ -50,10 +61,24 @@ const AllRooms = () => {
       room.city.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Sorting logic
+  const sortedRooms = [...filteredRooms];
+  if (sortOption === "lowToHigh") {
+    sortedRooms.sort((a, b) => a.rent - b.rent);
+  } else if (sortOption === "highToLow") {
+    sortedRooms.sort((a, b) => b.rent - a.rent);
+  } else if (sortOption === "topRatings") {
+    sortedRooms.sort((a, b) => {
+      const avgRatingA = calculateAverageRating(a);
+      const avgRatingB = calculateAverageRating(b);
+      return avgRatingB - avgRatingA;
+    });
+  }
+
   // Pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredRooms.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = sortedRooms.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -61,7 +86,7 @@ const AllRooms = () => {
     <div className=" bg-slate-100 ">
       <Navbar />
       <div className=" bg-slate-100 lg:flex lg:flex-col lg:items-center lg:justify-center">
-        <div className=" border-b-2 border-BT flex h-8 items-center mx-3 px-4 lg:w-10/12 my-4">
+        <div className=" border-b-2 border-BT flex h-8 items-center mx-3 px-4 lg:w-10/12 my-4 relative">
           <input
             type="text"
             className="h-full w-full bg-slate-100  focus:outline-none "
@@ -69,17 +94,40 @@ const AllRooms = () => {
             onChange={handleSearchInputChange}
           />
           <FaSearch className="text-2xl text-BT bg-slate-100" />
+          <button
+            className="ml-2 focus:outline"
+            onClick={toggleSortDropdown}
+          >
+            <FaSort className="text-2xl text-BT" />
+          </button>
+          {showSortDropdown && (
+            <div className="absolute bg-white shadow-md rounded-md  mt-2 py-1 w-32 z-10 right-0 top-full">
+              <div
+                className="hover:bg-BT hover:text-white px-4 py-2 cursor-pointer"
+                onClick={() => handleSortOptionChange("lowToHigh")}
+              >
+                Low to High Price
+              </div>
+              <div
+                className="hover:bg-BT hover:text-white px-4 py-2 cursor-pointer"
+                onClick={() => handleSortOptionChange("highToLow")}
+              >
+                High to Low Price
+              </div>
+              <div
+                className="hover:bg-BT hover:text-white px-4 py-2 cursor-pointer"
+                onClick={() => handleSortOptionChange("topRatings")}
+              >
+                Top Ratings
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className=" min-h-[80vh]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 py-3 m-5 lp:mx-10 sm:mx-28 md:mx-8 lg:mx-10 xl:mx-20">
           {currentItems.map((room) => {
-            // Calculate average rating
-            const ratings = room.reviews.map((review) => review.rating);
-            const averageRating =
-              ratings.length > 0
-                ? ratings.reduce((acc, curr) => acc + curr) / ratings.length
-                : 0;
+            const averageRating = calculateAverageRating(room);
 
             return (
               <div
@@ -112,11 +160,10 @@ const AllRooms = () => {
                   <div className=" p-4">
                     <div className=" flex justify-between">
                       <div className="flex justify-start gap-1">
-                        {/* <h3 className="font-bold text-xl">{room.name}</h3> */}
                         <p>{room.city} ,</p>
                         <p> {room.state}</p>
                       </div>
-                      {ratings.length > 0 ? (
+                      {averageRating > 0 ? (
                         <div className=" flex items-center gap-1">
                           <FaStar className=" text-BT" />{" "}
                           {averageRating.toFixed(1)}
@@ -141,13 +188,11 @@ const AllRooms = () => {
                         </p>
                       </div>
                       <div>
-                        {room.booked ? (
+                        {room.booked && (
                           <div className=" flex bg-BT justify-between p-1 text-white items-center gap-2 rounded-md">
                             <IoMdAlert />
                             Booked
                           </div>
-                        ) : (
-                          <></>
                         )}
                       </div>
                     </div>
@@ -160,7 +205,7 @@ const AllRooms = () => {
       </div>
       <Pagination
         itemsPerPage={itemsPerPage}
-        totalItems={filteredRooms.length}
+        totalItems={sortedRooms.length}
         paginate={paginate}
       />
     </div>
@@ -214,6 +259,13 @@ const getWindowSize = () => {
   } else {
     return 30; // Monitor
   }
+};
+
+const calculateAverageRating = (room) => {
+  const ratings = room.reviews.map((review) => review.rating);
+  return ratings.length > 0
+    ? ratings.reduce((acc, curr) => acc + curr) / ratings.length
+    : 0;
 };
 
 export default AllRooms;
