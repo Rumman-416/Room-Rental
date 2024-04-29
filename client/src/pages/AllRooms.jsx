@@ -104,6 +104,12 @@ const AllRooms = () => {
             <div className="absolute bg-white shadow-md rounded-md  mt-2 py-1 w-32 z-10 right-0 top-full">
               <div
                 className="hover:bg-BT hover:text-white px-4 py-2 cursor-pointer"
+                onClick={() => handleSortOptionChange("default")}
+              >
+                Default
+              </div>
+              <div
+                className="hover:bg-BT hover:text-white px-4 py-2 cursor-pointer"
                 onClick={() => handleSortOptionChange("lowToHigh")}
               >
                 Low to High Price
