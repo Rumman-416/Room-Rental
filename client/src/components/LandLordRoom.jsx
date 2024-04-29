@@ -13,7 +13,7 @@ const RenterRoom = () => {
   const [rooms, setRooms] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showUpdate, setShowUpdate] = useState(false);
-  const [selectedRoomId, setSelectedRoomId] = useState(null); 
+  const [selectedRoomId, setSelectedRoomId] = useState(null); // State to store selected room id
   const userId = useSelector((state) => state.auth.userId);
 
   useEffect(() => {
@@ -30,8 +30,9 @@ const RenterRoom = () => {
     };
 
     fetchRenterRooms();
-  }, [userId]); 
+  }, [userId]); // Fetch rooms whenever userId or token changes
 
+  //  delete rooms
   const onClickDeleteRoom = async (roomId) => {
     try {
       await axios.delete(`http://localhost:3000/dashboard/${roomId}`);
@@ -42,6 +43,7 @@ const RenterRoom = () => {
     }
   };
 
+  //search for rooms
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
@@ -67,17 +69,19 @@ const RenterRoom = () => {
       const response = await axios.get(
         `http://localhost:3000/dashboard/${selectedRoomId}`
       );
+      // Find the index of the updated room in the rooms array
       const updatedRoomIndex = rooms.findIndex(
         (room) => room._id === selectedRoomId
       );
+      // Create a new array with updated room details
       const updatedRooms = [...rooms];
       updatedRooms[updatedRoomIndex] = response.data;
+      // Update state with the new room details
       setRooms(updatedRooms);
     } catch (error) {
       console.error("Error fetching updated room details:", error);
     }
   };
-
   return (
     <div className="p-5 flex flex-col justify-center items-center gap-5">
       <div className=" p-1 gap-2 w-11/12 rounded-xl border-2 border-BT flex items-center">
@@ -204,7 +208,7 @@ const RenterRoom = () => {
             roomId={selectedRoomId}
             closeForm={() => setShowUpdate(false)}
             onUpdateSuccess={handleUpdateSuccess}
-            roomImages={filteredRooms.find(room => room._id === selectedRoomId).images}
+            images={filteredRooms.find(room => room._id === selectedRoomId).images} 
           />
         </div>
       )}
