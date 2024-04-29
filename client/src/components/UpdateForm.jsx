@@ -7,6 +7,8 @@ import { AiOutlineClose } from "react-icons/ai";
 const UpdateForm = ({ roomId, closeForm, onUpdateSuccess, images }) => {
   const [roomDetails, setRoomDetails] = useState(null);
   const [updateSuccess, setUpdateSuccess] = useState(null); // State variable for update success message
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [selectAllImages, setSelectAllImages] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -41,7 +43,26 @@ const UpdateForm = ({ roomId, closeForm, onUpdateSuccess, images }) => {
       [name]: value
     }));
   };
+  // Handle image selection
+  const handleImageClick = (index) => {
+    const selectedIndex = selectedImages.indexOf(index);
+    if (selectedIndex === -1) {
+      setSelectedImages([...selectedImages, index]);
+    } else {
+      const updatedSelection = selectedImages.filter((i) => i !== index);
+      setSelectedImages(updatedSelection);
+    }
+  };
 
+  // Handle "Select All" functionality
+  const handleSelectAllImages = () => {
+    if (!selectAllImages) {
+      setSelectedImages([...Array(images.length).keys()]);
+    } else {
+      setSelectedImages([]);
+    }
+    setSelectAllImages(!selectAllImages);
+  };
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -85,16 +106,39 @@ const UpdateForm = ({ roomId, closeForm, onUpdateSuccess, images }) => {
         )}
         <form onSubmit={handleSubmit}>
 
-        <div className="grid grid-cols-3 gap-4 mt-4">
-        {images && images.map((image, index) => (
-  <img
-    key={index}
-    src={`http://localhost:3000/${image}`}
-    alt={`Room Image ${index + 1}`}
-    className="w-full h-auto rounded-md"
-  />
-))}
-        </div>
+        
+     
+        <div className="mt-4">
+            <input
+              type="checkbox"
+              checked={selectAllImages}
+              onChange={handleSelectAllImages}
+              className="mr-2"
+            />
+            <label className="cursor-pointer" onClick={handleSelectAllImages}>Select All</label>
+          </div>
+          <div className="grid grid-cols-3 gap-4 mt-4">
+            {images && images.map((image, index) => (
+              <div 
+                key={index} 
+                className={`relative overflow-hidden rounded-md cursor-pointer ${selectedImages.includes(index) ? 'ring ring-blue-500 ring-offset-2' : ''}`}
+                onClick={() => handleImageClick(index)}
+              >
+                <input
+                  type="checkbox"
+                  checked={selectedImages.includes(index)}
+                  onChange={() => handleImageClick(index)}
+                  className="absolute top-2 left-2 z-10 hidden"
+                />
+                <img
+                  src={`http://localhost:3000/${image}`}
+                  alt={`Room Image ${index + 1}`}
+                  className="object-cover w-full h-40"
+                />
+              </div>
+            ))}
+          </div>
+         
         
           <label className="block mb-2">
             Name:
