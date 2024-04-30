@@ -5,9 +5,11 @@ import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import UpdateForm from "./UpdateForm";
-import { BsTelephone } from "react-icons/bs";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { PiPencilLineDuotone } from "react-icons/pi";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const RenterRoom = () => {
   const [rooms, setRooms] = useState([]);
@@ -87,7 +89,7 @@ const RenterRoom = () => {
   };
 
   return (
-    <div className="p-5 flex flex-col justify-center items-center gap-5">
+    <div className="p-5 flex flex-col justify-start w-full items-center gap-5">
       <div className=" p-1 gap-2 w-11/12 rounded-xl border-2 border-BT flex items-center">
         <FaSearch className="text-BT" />
         <input
@@ -98,109 +100,88 @@ const RenterRoom = () => {
         />
       </div>
       <h5 className=" text-black text-2xl">Your Rooms</h5>
-      <div className=" grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+      <div className="flex flex-col gap-2">
         {filteredRooms.map((room) => (
           <div
             key={room._id}
-            className=" border-2 border-BT rounded-xl p-5 m-5 flex flex-col gap-3 font-light "
+            className=" border-2 border-BT rounded-xl  w-[90vw] flex sm:w-[75vw] md:w-[60vw] lg:w-[50vw] items-center font-light p-2 gap-2"
           >
-            <div className="flex gap-1 items-center">
-              <h3 className=" font-title font-normal text-BT">Name :</h3>
-              <span className="font-light text-sm text-gray-600">
-                {room.name}
-              </span>
-            </div>
-            <div className=" flex flex-col gap-3">
-              <div className="flex gap-1 items-center">
-                <p className=" font-title font-medium text-BT flex items-center gap-1">
-                  <BsTelephone /> :
-                </p>
-                <span className="font-light text-sm text-gray-600">
-                  {room.phone}
-                </span>
+            {room.images && room.images.length <= 1 ? (
+              <div className=" w-[4rem] h-[3rem] relative overflow-hidden ">
+                <img
+                  src={`http://localhost:3000/${room.images[0]}`}
+                  className=" w-full  bg-contain  "
+                />
               </div>
-              <div className="flex gap-1 items-center">
-                <p className=" font-title font-normal text-BT">Address:</p>
-                <span className="font-light text-sm text-gray-600">
-                  {room.address}
-                </span>
-              </div>
-              <div className=" flex justify-between ">
-                <div className="flex gap-1 items-center">
-                  <p className=" font-title font-normal text-BT">City:</p>
-                  <span className="font-light text-sm text-gray-600">
-                    {room.city}
-                  </span>
-                </div>
-                <div className="flex gap-1 items-center">
-                  <p className=" font-title font-normal text-BT">State :</p>
-                  <span className="font-light text-sm text-gray-600">
-                    {room.state}
-                  </span>
-                </div>
-              </div>
-              <div className="flex justify-between">
-                <div className=" flex gap-2 items-center">
-                  <p className=" font-title font-normal text-BT">Rent:</p>
-                  <span className="font-light text-sm text-gray-600">
-                    ₹{room.rent}
-                  </span>
-                </div>
-                <div className=" flex gap-2 items-center">
-                  <p className=" font-title font-normal text-BT flex items-center gap-2">
-                    <BsFillPeopleFill />:
-                  </p>
-                  <span className="font-light text-sm text-gray-600">
-                    {room.numOfGuest} guest
-                  </span>
-                </div>
-              </div>
-              <div className=" font-title font-normal text-BT">
-                Your room description :{" "}
-                <span className="font-light text-sm text-gray-600">
-                  {room.description}
-                </span>
-              </div>
-            </div>
-            <div className=" flex flex-col justify-center items-center">
-              {room.images && room.images.length <= 1 ? (
-                <div className=" w-[20rem] h-[12rem] relative overflow-hidden p-5">
+            ) : (
+              <Slider
+                {...settings}
+                className=" w-[4rem] h-[3rem] relative overflow-hidden"
+              >
+                {room.images.map((image, index) => (
                   <img
-                    src={`http://localhost:3000/${room.images[0]}`}
-                    className=" w-full  bg-contain rounded-lg "
+                    key={index}
+                    src={`http://localhost:3000/${image}`}
+                    alt={`${index + 1}`}
+                    className=" bg-contain  w-full"
                   />
+                ))}
+              </Slider>
+            )}
+            <div className=" lp:flex justify-between w-10/12 sm:w-full">
+              <Link to={`/room/${room._id}`}>
+                <div>
+                  <div className="flex gap-1 items-center  ">
+                    <h3 className=" font-title font-normal text-BT">Name :</h3>
+                    <span className="font-light text-xs text-gray-600">
+                      {room.name}
+                    </span>
+                  </div>
+                  <div className=" flex flex-col justify-between ">
+                    <div className="flex gap-1 items-center">
+                      <p className=" font-title font-normal text-BT">City:</p>
+                      <span className="font-light text-xs text-gray-600">
+                        {room.city}
+                      </span>
+                    </div>
+                    <div className="flex gap-1 items-center">
+                      <p className=" font-title font-normal text-BT">State :</p>
+                      <span className="font-light text-xs text-gray-600">
+                        {room.state}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center w-[12rem] mp:w-[15rem] lg:w-[20rem]">
+                    <div className=" flex gap-1 items-center justify-center">
+                      <p className=" font-title font-normal text-BT">Rent:</p>
+                      <span className="font-light text-xs text-gray-600">
+                        ₹{room.rent}
+                      </span>
+                    </div>
+                    <div className=" flex gap-1 items-center justify-center">
+                      <p className=" font-title font-normal text-BT flex items-center gap-1">
+                        <BsFillPeopleFill />:
+                      </p>
+                      <span className="font-light text-xs text-gray-600">
+                        {room.numOfGuest} guest
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              ) : (
-                <Slider
-                  {...settings}
-                  className=" w-[20rem] h-[12rem] relative overflow-hidden"
-                >
-                  {room.images.map((image, index) => (
-                    <img
-                      key={index}
-                      src={`http://localhost:3000/${image}`}
-                      alt={`${index + 1}`}
-                      className=" bg-contain p-5 w-full"
-                    />
-                  ))}
-                </Slider>
-              )}
-              <div className="flex">
-                <button
-                  className=" px-5 py-1 bg-red-600 text-white m-5 rounded-md"
+              </Link>
+              <div className=" flex  justify-end items-center gap-1 lg:gap-5">
+                <RiDeleteBinLine
+                  className="  text-red-600 text-xl"
                   onClick={() => onClickDeleteRoom(room._id)}
-                >
-                  Delete
-                </button>
-                <button
-                  className="px-5 py-1 bg-blue-600 text-white m-5 rounded-md"
+                />
+
+                <PiPencilLineDuotone
+                  className=" text-blue-600  text-xl"
                   onClick={() => {
                     setSelectedRoomId(room._id);
                     setShowUpdate(true);
                   }}
-                >
-                  Update
-                </button>
+                />
               </div>
             </div>
           </div>
@@ -212,9 +193,9 @@ const RenterRoom = () => {
             id={selectedRoomId}
             closeForm={() => setShowUpdate(false)}
             onUpdateSuccess={handleUpdateSuccess}
-            images={
-              filteredRooms.find((room) => room._id === selectedRoomId).images
-            }
+            // images={
+            //   filteredRooms.find((room) => room._id === selectedRoomId).images
+            // }
           />
         </div>
       )}

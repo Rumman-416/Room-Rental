@@ -90,7 +90,7 @@ const AddRooms = () => {
   };
 
   return (
-    <div className="max-h-screen flex items-center justify-center ">
+    <div className="max-h-screen flex items-center justify-center lg:mt-[4rem]">
       <div className=" ml-1 mr-1 p-4 rounded-r-md rounded-l-md  max-w-md opacity-90">
         <h3 className="text-2xl font-medium mb-4 text-center">Add Rooms</h3>
         <div className="space-y-2">
