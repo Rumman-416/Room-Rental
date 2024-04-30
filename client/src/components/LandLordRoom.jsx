@@ -85,7 +85,7 @@ const RenterRoom = () => {
       // Handle the error here if necessary
     }
   };
-  
+
   return (
     <div className="p-5 flex flex-col justify-center items-center gap-5">
       <div className=" p-1 gap-2 w-11/12 rounded-xl border-2 border-BT flex items-center">
@@ -209,10 +209,12 @@ const RenterRoom = () => {
       {showUpdate && (
         <div className="update-form-popup">
           <UpdateForm
-            roomId={selectedRoomId}
+            id={selectedRoomId}
             closeForm={() => setShowUpdate(false)}
             onUpdateSuccess={handleUpdateSuccess}
-            images={filteredRooms.find(room => room._id === selectedRoomId).images} 
+            images={
+              filteredRooms.find((room) => room._id === selectedRoomId).images
+            }
           />
         </div>
       )}

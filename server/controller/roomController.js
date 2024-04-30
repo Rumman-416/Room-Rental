@@ -134,6 +134,7 @@ const updateRoom = async (req, res) => {
     return res.status(500).send("Internal Server Error");
   }
 };
+
 const deleteRoom = async (req, res) => {
   try {
     const { id } = req.params;
