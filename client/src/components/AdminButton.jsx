@@ -66,7 +66,7 @@ const AdminButton = () => {
           {show && <LandLordRoom />}
         </div>
       ) : (
-        <div className=" flex">
+        <div className="flex w-full justify-center">
           <AddRooms />
           <LandLordRoom />
         </div>

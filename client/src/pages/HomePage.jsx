@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import BedroomImage from "../assets/images/bedroom.png";
 
 function HomePage() {
@@ -42,12 +43,16 @@ function HomePage() {
           </div>
         </div>
         <div className="flex flex-col items-center ">
-          <button className="bg-BT text-white font-regular m-2 h-10 rounded-full w-2/3  flex items-center justify-center">
-            Sign in as Landlord
-          </button>
-          <button className="bg-BT text-white font-regular m-2 h-10 rounded-full w-2/3 flex items-center justify-center">
-            Sign in as Tenant
-          </button>
+          <Link to={"/landlord-register"}>
+            <button className="bg-BT text-white font-regular m-2 h-10 rounded-full w-2/3  flex items-center justify-center">
+              Sign in as Landlord
+            </button>
+          </Link>
+          <Link to={"/renter-register"}>
+            <button className="bg-BT text-white font-regular m-2 h-10 rounded-full w-2/3 flex items-center justify-center">
+              Sign in as Tenant
+            </button>
+          </Link>
         </div>
       </div>
       <div className="text-center mt-4 bg-BT bg-opacity-50 py-2">

@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
-  const [nav2, setNav2] = useState(false);
   const [services, setServices] = useState(false);
   const navigate = useNavigate();
 
@@ -13,9 +12,6 @@ const Navbar = () => {
     setNav(!nav);
   };
 
-  const toggleServices = () => {
-    setServices(!services);
-  };
   const [isScroller, setIsScroller] = useState(window.innerWidth <= 1024);
 
   useEffect(() => {
@@ -34,7 +30,6 @@ const Navbar = () => {
     try {
       window.alert("Successfully logged out");
       localStorage.removeItem("token");
-      // window.location.reload();
       navigate("/login");
     } catch (e) {
       console.error(e);

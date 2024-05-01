@@ -89,7 +89,7 @@ const RenterRoom = () => {
   };
 
   return (
-    <div className="p-5 flex flex-col justify-start w-full items-center gap-5">
+    <div className="p-5 flex flex-col justify-start w-full items-center gap-5 xl:w-6/12">
       <div className=" p-1 gap-2 w-11/12 rounded-xl border-2 border-BT flex items-center">
         <FaSearch className="text-BT" />
         <input
@@ -104,7 +104,7 @@ const RenterRoom = () => {
         {filteredRooms.map((room) => (
           <div
             key={room._id}
-            className=" border-2 border-BT rounded-xl  w-[90vw] flex sm:w-[75vw] md:w-[60vw] lg:w-[50vw] items-center font-light p-2 gap-2"
+            className=" border-2 border-BT rounded-xl  w-[90vw] flex sm:w-[75vw] md:w-[60vw] lg:w-[50vw] xl:w-[40vw] items-center font-light p-2 gap-2"
           >
             {room.images && room.images.length <= 1 ? (
               <div className=" w-[4rem] h-[3rem] relative overflow-hidden ">
