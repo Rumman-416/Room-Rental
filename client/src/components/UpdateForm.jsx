@@ -50,8 +50,6 @@ const UpdateForm = ({ id, closeForm, onUpdateSuccess }) => {
       setUpdateSuccess(false); // Set update failure
     }
   };
-  
-  
 
   const handleCloseForm = () => {
     closeForm();
@@ -68,127 +66,135 @@ const UpdateForm = ({ id, closeForm, onUpdateSuccess }) => {
   }, [updateSuccess, closeForm]);
 
   return (
-    <div className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg p-8 max-w-lg w-full sm:w-auto">
-        <button
-          className="absolute top-2 right-2 text-gray-800 hover:text-gray-700"
-          onClick={handleCloseForm}
-        >
-          <AiOutlineClose className="text-2xl" />
-        </button>
-        <h1 className="text-xl font-bold mb-4">Update Room Details</h1>
+    <div className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-black bg-opacity-50 z-50 overflow-y-auto">
+      <div className="bg-white rounded-lg p-4 sm:p-8 max-w-lg w-full sm:w-auto">
+        <div>
+          <button
+            className="absolute top-2 right-2 text-gray-800 hover:text-gray-700"
+            onClick={handleCloseForm}
+          >
+            <AiOutlineClose className="text-2xl" />
+          </button>
+          <h1 className="text-lg sm:text-xl font-bold mb-4">Update Room Details</h1>
 
-        {updateSuccess === true && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-            <strong className="font-bold">Success!</strong>
-            <span className="block sm:inline"> Data updated successfully.</span>
-          </div>
-        )}
-        {updateSuccess === false && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-            <strong className="font-bold">Failed!</strong>
-            <span className="block sm:inline"> Cannot update data!</span>
-          </div>
-        )}
-        <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-              <label className="block mb-2">Name:</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md p-1 w-full"
-              />
-            </div>
-            <div>
-              <label className="block mb-2">Phone:</label>
-              <input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md p-1 w-full"
-              />
-            </div>
-            <div>
-              <label className="block mb-2">No. of Guest:</label>
-              <input
-                type="text"
-                name="numOfGuest"
-                value={formData.numOfGuest}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md p-1 w-full"
-              />
-            </div>
-            <div>
-              <label className="block mb-2">Rent:</label>
-              <input
-                type="text"
-                name="rent"
-                value={formData.rent}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md p-1 w-full"
-              />
-            </div>
-            <div className="sm:col-span-2">
-              <label className="block mb-2">Address:</label>
-              <input
-                type="text"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md p-1 w-full"
-              />
-            </div>
-            <div>
-              <label className="block mb-2">City:</label>
-              <input
-                type="text"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md p-1 w-full"
-              />
-            </div>
-            <div>
-              <label className="block mb-2">State:</label>
-              <input
-                type="text"
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md p-1 w-full"
-              />
-            </div>
-            <div className="sm:col-span-2">
-              <label className="block mb-2">Description:</label>
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md p-1 w-full h-25"
-              ></textarea>
-            </div>
-          </div>
-          
-          <div className="flex justify-center mt-4">
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+          {updateSuccess === true && (
+            <div
+              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+              role="alert"
             >
-              Update
-            </button>
-            <button
-              type="button"
-              onClick={closeForm}
-              className="text-gray-500 hover:text-gray-700 px-4 py-2 rounded-md"
+              <strong className="font-bold">Success!</strong>
+              <span className="block sm:inline"> Data updated successfully.</span>
+            </div>
+          )}
+          {updateSuccess === false && (
+            <div
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+              role="alert"
             >
-              Cancel
-            </button>
-          </div>
-        </form>
+              <strong className="font-bold">Failed!</strong>
+              <span className="block sm:inline"> Cannot update data!</span>
+            </div>
+          )}
+          <form onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block mb-2 font-semibold">Name:</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md p-1 w-full"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-semibold">Phone:</label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md p-1 w-full"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-semibold">No. of Guest:</label>
+                <input
+                  type="text"
+                  name="numOfGuest"
+                  value={formData.numOfGuest}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md p-1 w-full"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-semibold">Rent:</label>
+                <input
+                  type="text"
+                  name="rent"
+                  value={formData.rent}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md p-1 w-full"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block mb-2 font-semibold">Address:</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md p-1 w-full"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-semibold">City:</label>
+                <input
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md p-1 w-full"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-semibold">State:</label>
+                <input
+                  type="text"
+                  name="state"
+                  value={formData.state}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md p-1 w-full"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block mb-2 font-semibold">Description:</label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md p-1 w-full h-25"
+                ></textarea>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row justify-center mt-4">
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto"
+              >
+                Update
+              </button>
+              <button
+                type="button"
+                onClick={closeForm}
+                className="text-gray-500 hover:text-gray-700 px-4 py-2 rounded-md w-full sm:w-auto"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
