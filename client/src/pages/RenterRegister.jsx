@@ -35,7 +35,7 @@ const RenterLogin = () => {
   };
   // bg-[#f8f7fa]
   return (
-    <div className=" mx-10 xl:mx-10  flex flex-col h-[100vh] justify-center items-center lp:items-center lg:flex-row  lg:justify-between lg:px-5 lg:gap-5 xl:gap-[6rem]">
+    <div className=" mx-10 xl:mx-10  flex flex-col h-[100vh] justify-center items-center lp:items-center lg:flex-row  lg:justify-between lg:px-5 lg:gap-5 xl:gap-[10rem]">
       <div className=" h-0 w-0 opacity-0 lg:h-[95%]  lg:w-[45%] lg:opacity-100  flex justify-end items-center rounded-xl">
         <img
           src="Images/auth-forgot-password-illustration-light.png"
@@ -43,7 +43,7 @@ const RenterLogin = () => {
           className=" w-[30vw] xl:w-auto xl:max-h-[70%]"
         />
       </div>
-      <div className=" flex flex-col justify-center items-center lg:w-[55%] ">
+      <div className=" flex flex-col justify-center items-start lg:w-[55%] ">
         <div className="flex flex-col gap-2 my-8 ">
           <img src="Images/logo.png" alt="" className="w-16" />
           <h1 className="text-[22px] xl:text-[1.625 rem] font-medium text-HC">
