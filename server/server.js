@@ -7,7 +7,11 @@ const { updateBookingStatus } = require("./controller/roomController");
 
 const app = express();
 const PORT = 3000;
-const URI = "mongodb://127.0.0.1:27017/roomrental";
+// const URI = "mongodb://127.0.0.1:27017/roomrental";
+const URI =
+  "mongodb+srv://chowdhuryrumman78:roomrental%40123@roomrental.rhvefyb.mongodb.net/roomrental";
+//chowdhuryrumman78
+// roomrental@123
 app.use(express.json());
 app.use(cors());
 app.use("/dashboard", routeroom);

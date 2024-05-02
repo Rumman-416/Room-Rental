@@ -12,6 +12,7 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
 import { RiEmotionUnhappyLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
+import Footer from "../components/Footer";
 
 const ParticularRoom = () => {
   const { roomId } = useParams();
@@ -298,6 +299,7 @@ const ParticularRoom = () => {
       ) : (
         <div>Loading...</div>
       )}
+      <Footer />
     </div>
   );
 };

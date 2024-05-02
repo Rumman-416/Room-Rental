@@ -20,11 +20,11 @@ const CancelBooking = ({ roomId }) => {
     }
   };
   return (
-    <div>
+    <div className=" p-3">
       <input
         type="button"
         value="Cancel Booking"
-        className=" bg-red-600 text-white p-2 rounded-lg"
+        className=" bg-red-600 text-white p-2 rounded-lg cursor-pointer"
         onClick={cancelBooking}
       />
     </div>

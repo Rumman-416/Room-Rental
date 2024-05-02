@@ -9,6 +9,7 @@ import Navbar from "../components/Navbar";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Footer from "../components/Footer";
 
 const AllRooms = () => {
   const [rooms, setRooms] = useState([]);
@@ -94,10 +95,7 @@ const AllRooms = () => {
             onChange={handleSearchInputChange}
           />
           <FaSearch className="text-2xl text-BT bg-slate-100" />
-          <button
-            className="ml-2 focus:outline"
-            onClick={toggleSortDropdown}
-          >
+          <button className="ml-2 focus:outline" onClick={toggleSortDropdown}>
             <FaSort className="text-2xl text-BT" />
           </button>
           {showSortDropdown && (
@@ -214,6 +212,7 @@ const AllRooms = () => {
         totalItems={sortedRooms.length}
         paginate={paginate}
       />
+      \<Footer />
     </div>
   );
 };

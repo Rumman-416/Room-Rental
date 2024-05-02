@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { CiMenuBurger } from "react-icons/ci";
 import { Link } from "react-router-dom";
 
@@ -7,6 +7,7 @@ const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [services, setServices] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleNav = () => {
     setNav(!nav);
@@ -35,6 +36,18 @@ const Navbar = () => {
       console.error(e);
     }
   };
+
+  // State to manage active link
+  const [activeLink, setActiveLink] = useState("/bookrooms"); // Default active link is "/bookrooms"
+
+  useEffect(() => {
+    // Check if the current location matches any of the links in the navbar
+    const currentPath = location.pathname;
+    if (currentPath !== activeLink) {
+      setActiveLink(currentPath);
+    }
+  }, [location]);
+
   return (
     <div className=" bg-white sticky top-0 z-50">
       {isScroller ? (
@@ -65,17 +78,53 @@ const Navbar = () => {
           >
             {nav && (
               <ul className="py-4 font-medium text-sm">
-                <Link to="/bookrooms">
-                  <li className="uppercase bg p-2">Home</li>
+                <Link
+                  to="/bookrooms"
+                  onClick={() => setActiveLink("/bookrooms")}
+                >
+                  <li
+                    className={`uppercase bg p-2 ${
+                      activeLink === "/bookrooms" ? "text-BT" : ""
+                    }`}
+                  >
+                    Home
+                  </li>
                 </Link>
-                <Link to={"/Booked-rooms"}>
-                  <li className="uppercase p-2">Rooms booked</li>
+                <Link
+                  to={"/Booked-rooms"}
+                  onClick={() => setActiveLink("/Booked-rooms")}
+                >
+                  <li
+                    className={`uppercase p-2 ${
+                      activeLink === "/Booked-rooms" ? "text-BT" : ""
+                    }`}
+                  >
+                    Rooms booked
+                  </li>
                 </Link>
-                <Link to={"/services"}>
-                  <li className="uppercase p-2">services</li>
+                <Link
+                  to={"/services"}
+                  onClick={() => setActiveLink("/services")}
+                >
+                  <li
+                    className={`uppercase p-2 ${
+                      activeLink === "/services" ? "text-BT" : ""
+                    }`}
+                  >
+                    Services
+                  </li>
                 </Link>
-                <Link to={"/landlord-dashboard"}>
-                  <li className="uppercase p-2">Dashboard</li>
+                <Link
+                  to={"/landlord-dashboard"}
+                  onClick={() => setActiveLink("/landlord-dashboard")}
+                >
+                  <li
+                    className={`uppercase p-2 ${
+                      activeLink === "/landlord-dashboard" ? "text-BT" : ""
+                    }`}
+                  >
+                    Dashboard
+                  </li>
                 </Link>
               </ul>
             )}
@@ -92,23 +141,48 @@ const Navbar = () => {
               />
             </Link>
             <div className=" flex items-center gap-6">
-              <Link to={"/bookrooms"}>
-                <h1 className="uppercase font-semibold hover:text-BT transition-all duration-300">
+              <Link
+                to={"/bookrooms"}
+                onClick={() => setActiveLink("/bookrooms")}
+              >
+                <h1
+                  className={`uppercase font-semibold hover:text-BT transition-all duration-300 ${
+                    activeLink === "/bookrooms" ? "text-BT" : ""
+                  }`}
+                >
                   Search Rooms
                 </h1>
               </Link>
-              <Link to={"/Booked-rooms"}>
-                <h1 className=" uppercase font-semibold hover:text-[#f4a210] transition-all duration-300">
+              <Link
+                to={"/Booked-rooms"}
+                onClick={() => setActiveLink("/Booked-rooms")}
+              >
+                <h1
+                  className={` uppercase font-semibold hover:text-BT transition-all duration-300 ${
+                    activeLink === "/Booked-rooms" ? "text-BT" : ""
+                  }`}
+                >
                   Rooms Booked
                 </h1>
               </Link>
-              <Link to={"/services"}>
-                <h1 className=" uppercase font-semibold hover:text-[#f4a210] transition-all duration-300">
-                  services
+              <Link to={"/services"} onClick={() => setActiveLink("/services")}>
+                <h1
+                  className={` uppercase font-semibold hover:text-BT transition-all duration-300 ${
+                    activeLink === "/services" ? "text-BT" : ""
+                  }`}
+                >
+                  Services
                 </h1>
               </Link>
-              <Link to={"/landlord-dashboard"}>
-                <h1 className=" uppercase font-semibold hover:text-[#f4a210] transition-all duration-300">
+              <Link
+                to={"/landlord-dashboard"}
+                onClick={() => setActiveLink("/landlord-dashboard")}
+              >
+                <h1
+                  className={` uppercase font-semibold hover:text-BT transition-all duration-300 ${
+                    activeLink === "/landlord-dashboard" ? "text-BT" : ""
+                  }`}
+                >
                   Dashboard
                 </h1>
               </Link>
