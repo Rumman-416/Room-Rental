@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { notification } from "antd";
 
 const AddRooms = () => {
   const [name, setName] = useState("");
@@ -32,23 +33,28 @@ const AddRooms = () => {
         !numOfGuest ||
         !images.length
       ) {
-        return window.alert(
-          "Please fill all the information and select at least one image."
-        );
+        return notification.error({
+          message: "Error",
+          description:
+            "Please fill all the information and select at least one image.",
+        });
       }
       if (
         parseInt(phone) < 0 ||
         parseInt(rent) < 0 ||
         parseInt(numOfGuest) < 0
       ) {
-        return window.alert(
-          "Phone, Rent, and Number of Guests cannot be negative."
-        );
+        return notification.error({
+          message: "Error",
+          description: "Phone, Rent, and Number of Guests cannot be negative.",
+        });
       }
       if (phone.length !== 10) {
-        return window.alert(
-          "Invalid phone number. Please enter a 10-digit phone number."
-        );
+        return notification.error({
+          message: "Error",
+          description:
+            "Invalid phone number. Please enter a 10-digit phone number.",
+        });
       }
 
       const formData = new FormData();
@@ -72,7 +78,10 @@ const AddRooms = () => {
         },
       });
 
-      window.alert("Data added successfully");
+      notification.success({
+        message: "Success",
+        description: "Data Added Successfully!",
+      });
 
       setName("");
       setPhone("");

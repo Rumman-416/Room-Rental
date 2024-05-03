@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -6,13 +5,14 @@ import { useDispatch } from "react-redux";
 import { login } from "../redux/AuthSlice/authSlice";
 import bgImage from "../assets/images/bg.jpg";
 import eyeIcon from "../assets/images/hide.png";
+import { notification } from "antd";
 
 const RenterLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -24,27 +24,28 @@ const RenterLogin = () => {
           password: password,
         }
       );
-      // Extract token from response and save it to local storage
       const token = response.data.token;
       localStorage.setItem("token", token);
-      // Parse token after storing it in local storage
       const decodedToken = parseJwt(token);
       if (decodedToken) {
         const userId = decodedToken.userId;
         dispatch(login({ userId }));
-        console.log(userId);
-        window.alert("Logged in successfully");
+        notification.success({
+          message: "Logged in successfully",
+        });
         navigate("/landlord-dashboard");
       } else {
         throw new Error("Failed to parse JWT token");
       }
     } catch (error) {
       console.error("Login error:", error);
-      window.alert("Login error", error);
+      notification.error({
+        message: "Login error",
+        description: error.message || "An error occurred while logging in.",
+      });
     }
   };
 
-  // Function to parse JWT token
   const parseJwt = (token) => {
     try {
       return JSON.parse(atob(token.split(".")[1]));

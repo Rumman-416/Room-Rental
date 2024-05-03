@@ -171,7 +171,7 @@ const ParticularRoom = () => {
     <div>
       <Navbar />
       {room ? (
-        <div className="container mx-auto px-5 flex flex-col gap-3 md:px-[8rem] lg:px-[10rem] xl:px-[14rem]">
+        <div className="container mx-auto px-5 flex flex-col items-center gap-3 md:px-[8rem] lg:px-[10rem] xl:px-[24rem] ">
           {fullImage && (
             <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-75">
               <img
@@ -185,116 +185,118 @@ const ParticularRoom = () => {
               />
             </div>
           )}
-
-          <div className="flex justify-center items-center w-full my-3">
-            {room.images && room.images.length <= 1 ? (
-              <div className="w-11/12 h-auto relative overflow-hidden flex justify-center items-center sm:w-9/12 lg:w-7/12">
-                <img
-                  src={`http://localhost:3000/${room.images[0]}`}
-                  className="w-full bg-contain rounded-lg"
-                  alt="Room"
-                  onClick={() => handleViewFullImage(room.images[0])}
-                />
-              </div>
-            ) : (
-              <Slider
-                {...settings}
-                className="w-auto h-[9rem] mp:h-[11rem] lp:h-[13rem] sm:h-[15rem]  
-                md:h-[18rem] lg:h-[20rem]   xl:h-[24rem] xl:w-8/12 relative overflow-hidden flex justify-center items-start"
-              >
-                {room.images.map((image, index) => (
+          <div className=" xl:w-[50vw]">
+            <div className="flex justify-center items-center w-full my-3">
+              {room.images && room.images.length <= 1 ? (
+                <div className="w-11/12 h-auto relative overflow-hidden flex justify-center items-center sm:w-9/12 lg:w-7/12 ">
                   <img
-                    key={index}
-                    src={`http://localhost:3000/${image}`}
-                    alt={`Room ${index + 1}`}
-                    className="bg-contain p-5 w-full bg-center"
-                    onClick={() => handleViewFullImage(image)}
+                    src={`http://localhost:3000/${room.images[0]}`}
+                    className="w-full bg-contain rounded-lg"
+                    alt="Room"
+                    onClick={() => handleViewFullImage(room.images[0])}
                   />
-                ))}
-              </Slider>
-            )}
-          </div>
+                </div>
+              ) : (
+                <Slider
+                  {...settings}
+                  className="w-auto h-[9rem] mp:h-[11rem] lp:h-[13rem] sm:h-[15rem]  
+                md:h-[18rem] lg:h-[20rem]   xl:h-[18rem] xl:w-8/12 relative overflow-hidden flex justify-center items-start"
+                >
+                  {room.images.map((image, index) => (
+                    <img
+                      key={index}
+                      src={`http://localhost:3000/${image}`}
+                      alt={`Room ${index + 1}`}
+                      className="bg-contain p-5 w-full bg-center"
+                      onClick={() => handleViewFullImage(image)}
+                    />
+                  ))}
+                </Slider>
+              )}
+            </div>
+            <div className=" flex flex-col gap-3">
+              <div className="flex justify-between xl:justify-start xl:gap-[10rem]">
+                <p className="font-bold flex gap-1">
+                  ₹ {room.rent} <span className="font-normal">night</span>
+                </p>
+                <div className="flex items-center gap-1">
+                  <BsFillPeopleFill className="text-BT" /> {room.numOfGuest}{" "}
+                  guest
+                </div>
+              </div>
+              <div className="flex flex-col justify-center items-stretch gap-3">
+                <div className="flex justify-between xl:justify-start xl:gap-10">
+                  <label>Check In :</label>
+                  <DatePicker
+                    selected={fromDate}
+                    onChange={handleFromDateChange}
+                    minDate={minDate}
+                    dateFormat="dd/MM/yyyy"
+                    className="border-2 border-red-200"
+                  />
+                </div>
+                <div className="flex justify-between xl:justify-start xl:gap-7">
+                  <label>Check Out :</label>
+                  <DatePicker
+                    selected={toDate}
+                    onChange={handleToDateChange}
+                    minDate={fromDate}
+                    dateFormat="dd/MM/yyyy"
+                    className="border-2 border-red-200"
+                  />
+                </div>
+              </div>
 
-          <div className="flex justify-between ">
-            <p className="font-bold flex gap-1">
-              ₹ {room.rent} <span className="font-normal">night</span>
-            </p>
-            <div className="flex items-center gap-1">
-              <BsFillPeopleFill className="text-BT" /> {room.numOfGuest} guest
+              <div className="font-semibold">
+                Address:{" "}
+                <span className="text-gray-500 font-normal text-[15px]">
+                  {room.address}
+                </span>
+              </div>
+              <div className="flex flex-col gap-3 justify-between">
+                <div className="font-semibold">
+                  City:{" "}
+                  <span className="text-gray-500 font-normal text-[15px]">
+                    {room.city}
+                  </span>
+                </div>
+                <div className="font-semibold">
+                  State:{" "}
+                  <span className="text-gray-500 font-normal text-[15px]">
+                    {room.state}
+                  </span>
+                </div>
+                <div className="text-gray-500 text-[15px] flex flex-col gap-3">
+                  <p>{room.description}</p>
+                  <h2 className="font-normal text-base text-BT">
+                    Hosted by <span className="font-semibold">{room.name}</span>
+                  </h2>
+                </div>
+              </div>
+              {room.booked ? (
+                <div className=" flex justify-center items-center p-2 gap-2 bg-BT rounded-lg text-white">
+                  <RiEmotionUnhappyLine className=" text-2xl" />
+                  <h1>we're sorry this room is currently booked</h1>
+                </div>
+              ) : (
+                <div className="flex justify-center items-center my-5">
+                  <button
+                    onClick={handleSaveDates}
+                    className="bg-BT p-3 text-white rounded-lg w-2/4 mr-3"
+                  >
+                    Save Room
+                  </button>
+                  <button
+                    onClick={handleBookRoom}
+                    className="bg-BT p-3 text-white rounded-lg w-2/4"
+                  >
+                    Book Room
+                  </button>
+                </div>
+              )}
             </div>
+            <Reviews />
           </div>
-          <div className="flex flex-col justify-center items-stretch gap-3">
-            <div className="flex justify-between">
-              <label>Check In :</label>
-              <DatePicker
-                selected={fromDate}
-                onChange={handleFromDateChange}
-                minDate={minDate}
-                dateFormat="dd/MM/yyyy"
-                className="border-2 border-red-200"
-              />
-            </div>
-            <div className="flex justify-between">
-              <label>Check Out :</label>
-              <DatePicker
-                selected={toDate}
-                onChange={handleToDateChange}
-                minDate={fromDate}
-                dateFormat="dd/MM/yyyy"
-                className="border-2 border-red-200"
-              />
-            </div>
-          </div>
-
-          <div className="font-semibold">
-            Address:{" "}
-            <span className="text-gray-500 font-normal text-[15px]">
-              {room.address}
-            </span>
-          </div>
-          <div className="flex flex-col gap-3 justify-between">
-            <div className="font-semibold">
-              City:{" "}
-              <span className="text-gray-500 font-normal text-[15px]">
-                {room.city}
-              </span>
-            </div>
-            <div className="font-semibold">
-              State:{" "}
-              <span className="text-gray-500 font-normal text-[15px]">
-                {room.state}
-              </span>
-            </div>
-            <div className="text-gray-500 text-[15px] flex flex-col gap-3">
-              <p>{room.description}</p>
-              <h2 className="font-normal text-base text-BT">
-                Hosted by <span className="font-semibold">{room.name}</span>
-              </h2>
-            </div>
-          </div>
-          {room.booked ? (
-            <div className=" flex justify-center items-center p-2 gap-2 bg-BT rounded-lg text-white">
-              <RiEmotionUnhappyLine className=" text-2xl" />
-              <h1>we're sorry this room is currently booked</h1>
-            </div>
-          ) : (
-            <div className="flex justify-center items-center my-5">
-              <button
-                onClick={handleSaveDates}
-                className="bg-BT p-3 text-white rounded-lg w-2/4 mr-3"
-              >
-                Save Room
-              </button>
-              <button
-                onClick={handleBookRoom}
-                className="bg-BT p-3 text-white rounded-lg w-2/4"
-              >
-                Book Room
-              </button>
-            </div>
-          )}
-
-          <Reviews />
         </div>
       ) : (
         <div>Loading...</div>

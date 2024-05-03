@@ -30,13 +30,13 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     // Check password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     // Generate JWT
@@ -133,6 +133,24 @@ const deleteBookedRoom = async (req, res) => {
   }
 };
 
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params; // Assuming id is passed as a URL parameter
+
+    // Find the user by ID
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Return the user object
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
 const ProtectedRoute = (req, res) => {
   res.json({ message: "Protected Route Accessed" });
 };
@@ -160,6 +178,7 @@ module.exports = {
   getBookedRooms,
   bookedRoom,
   deleteBookedRoom,
+  getUserById,
   ProtectedRoute,
   verifyToken,
 };

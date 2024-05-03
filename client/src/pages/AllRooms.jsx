@@ -256,13 +256,13 @@ const useWindowSize = () => {
 const getWindowSize = () => {
   const { innerWidth } = window;
   if (innerWidth < 640) {
-    return 10; // Phone screen
+    return 8; // Phone screen
   } else if (innerWidth < 1024) {
-    return 20; // Tablet
+    return 16; // Tablet
   } else if (innerWidth < 1440) {
-    return 30; // Laptop
+    return 16; // Laptop
   } else {
-    return 30; // Monitor
+    return 16; // Monitor
   }
 };
 

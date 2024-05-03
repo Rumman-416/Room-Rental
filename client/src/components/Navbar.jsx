@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CiMenuBurger } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { notification } from "antd";
+import axios from "axios";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
-  const [services, setServices] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-
-  const toggleNav = () => {
-    setNav(!nav);
-  };
-
+  const userId = useSelector((state) => state.auth.userId);
+  const [landlord, setLandlord] = useState(null);
   const [isScroller, setIsScroller] = useState(window.innerWidth <= 1024);
+  const [activeLink, setActiveLink] = useState("/bookrooms");
 
   useEffect(() => {
     const handleResize = () => {
@@ -27,26 +27,41 @@ const Navbar = () => {
     };
   }, []);
 
-  const logout = () => {
+  useEffect(() => {
+    userDetail();
+  }, []); // Fetch user details only once on component mount
+
+  const userDetail = async () => {
     try {
-      window.alert("Successfully logged out");
-      localStorage.removeItem("token");
-      navigate("/login");
-    } catch (e) {
-      console.error(e);
+      const response = await axios.get(
+        `http://localhost:3000/api/users/${userId}`
+      );
+      setLandlord(response.data.landlord);
+    } catch (error) {
+      console.error(error);
+      notification.error({
+        message: "Error",
+        description: "Failed to fetch user details.",
+      });
     }
   };
 
-  // State to manage active link
-  const [activeLink, setActiveLink] = useState("/bookrooms"); // Default active link is "/bookrooms"
+  const toggleNav = () => {
+    setNav(!nav);
+  };
 
-  useEffect(() => {
-    // Check if the current location matches any of the links in the navbar
-    const currentPath = location.pathname;
-    if (currentPath !== activeLink) {
-      setActiveLink(currentPath);
+  const logout = () => {
+    try {
+      localStorage.removeItem("token");
+      notification.success({
+        message: "Logout",
+        description: "Successfully logged out.",
+      });
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
     }
-  }, [location]);
+  };
 
   return (
     <div className=" bg-white sticky top-0 z-50">
@@ -102,30 +117,20 @@ const Navbar = () => {
                     Rooms booked
                   </li>
                 </Link>
-                <Link
-                  to={"/services"}
-                  onClick={() => setActiveLink("/services")}
-                >
-                  <li
-                    className={`uppercase p-2 ${
-                      activeLink === "/services" ? "text-BT" : ""
-                    }`}
+                {landlord && (
+                  <Link
+                    to={"/landlord-dashboard"}
+                    onClick={() => setActiveLink("/landlord-dashboard")}
                   >
-                    Services
-                  </li>
-                </Link>
-                <Link
-                  to={"/landlord-dashboard"}
-                  onClick={() => setActiveLink("/landlord-dashboard")}
-                >
-                  <li
-                    className={`uppercase p-2 ${
-                      activeLink === "/landlord-dashboard" ? "text-BT" : ""
-                    }`}
-                  >
-                    Dashboard
-                  </li>
-                </Link>
+                    <li
+                      className={`uppercase p-2 ${
+                        activeLink === "/landlord-dashboard" ? "text-BT" : ""
+                      }`}
+                    >
+                      Dashboard
+                    </li>
+                  </Link>
+                )}
               </ul>
             )}
           </div>
@@ -165,27 +170,20 @@ const Navbar = () => {
                   Rooms Booked
                 </h1>
               </Link>
-              <Link to={"/services"} onClick={() => setActiveLink("/services")}>
-                <h1
-                  className={` uppercase font-semibold hover:text-BT transition-all duration-300 ${
-                    activeLink === "/services" ? "text-BT" : ""
-                  }`}
+              {landlord && (
+                <Link
+                  to={"/landlord-dashboard"}
+                  onClick={() => setActiveLink("/landlord-dashboard")}
                 >
-                  Services
-                </h1>
-              </Link>
-              <Link
-                to={"/landlord-dashboard"}
-                onClick={() => setActiveLink("/landlord-dashboard")}
-              >
-                <h1
-                  className={` uppercase font-semibold hover:text-BT transition-all duration-300 ${
-                    activeLink === "/landlord-dashboard" ? "text-BT" : ""
-                  }`}
-                >
-                  Dashboard
-                </h1>
-              </Link>
+                  <h1
+                    className={` uppercase font-semibold hover:text-BT transition-all duration-300 ${
+                      activeLink === "/landlord-dashboard" ? "text-BT" : ""
+                    }`}
+                  >
+                    Dashboard
+                  </h1>
+                </Link>
+              )}
             </div>
             <div>
               <input

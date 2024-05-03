@@ -4,12 +4,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import UpdateForm from "./UpdateForm";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { PiPencilLineDuotone } from "react-icons/pi";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { notification } from "antd";
+import UpdateForm from "./UpdateForm";
 
 const RenterRoom = () => {
   const [rooms, setRooms] = useState([]);
@@ -39,9 +40,16 @@ const RenterRoom = () => {
     try {
       await axios.delete(`http://localhost:3000/dashboard/${roomId}`);
       setRooms((prevRooms) => prevRooms.filter((room) => room._id !== roomId));
-      window.alert("Room deleted");
+      notification.success({
+        message: "Success",
+        description: "Room deleted successfully!",
+      });
     } catch (error) {
       console.log("delete room error", error);
+      notification.error({
+        message: "Error",
+        description: "Failed to delete room. Please try again later.",
+      });
     }
   };
 
@@ -82,9 +90,16 @@ const RenterRoom = () => {
       setRooms(updatedRooms);
       // Close the update form
       setShowUpdate(false);
+      notification.success({
+        message: "Success",
+        description: "Room updated successfully!",
+      });
     } catch (error) {
       console.error("Error fetching updated room details:", error);
-      // Handle the error here if necessary
+      notification.error({
+        message: "Error",
+        description: "Failed to update room. Please try again later.",
+      });
     }
   };
 
@@ -193,9 +208,6 @@ const RenterRoom = () => {
             id={selectedRoomId}
             closeForm={() => setShowUpdate(false)}
             onUpdateSuccess={handleUpdateSuccess}
-            // images={
-            //   filteredRooms.find((room) => room._id === selectedRoomId).images
-            // }
           />
         </div>
       )}
